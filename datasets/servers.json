@@ -1,0 +1,47 @@
+[
+  {
+    "id": "1",
+    "country": "France",
+    "location": [
+          48.870961,
+          2.332176
+        ],
+    "reachable_from": 1
+  }, 
+  {
+    "id": "2",
+    "country": "Russian Federation",
+    "location": [
+          55.760140,
+          37.617844
+        ],
+    "reachable_from": 1
+  },
+  {
+    "id": "3",
+    "country": "United Kingdom",
+    "location": [
+          51.509782,
+          -0.126913
+        ],
+    "reachable_from": 3
+  },
+  {
+    "id": "4",
+    "country": "Italy",
+    "location": [
+          45.447464,
+          11.001697
+        ],
+    "reachable_from": 4
+  },
+  {
+    "id": "5",
+    "country": "United States",
+    "location": [
+          40.813678,
+          -73.959614
+        ],
+    "reachable_from": 2
+  }
+]

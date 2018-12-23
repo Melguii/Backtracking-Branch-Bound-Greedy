@@ -1,0 +1,419 @@
+[
+  {
+    "username": "claudia.peiro",
+    "followers": 3,
+    "follows": 3,
+    "activity": 5.0,
+    "connections": [
+      {
+        "username": "albert.pernia",
+        "since": 1465514657226,
+        "visits": 3,
+        "likes": 2,
+        "comments": 1
+      },
+      {
+        "username": "culinaryvictim",
+        "since": 1532610420479,
+        "visits": 3,
+        "likes": 1,
+        "comments": 0
+      },
+      {
+        "username": "jordi.male",
+        "since": 1475066538176,
+        "visits": 5,
+        "likes": 1,
+        "comments": 0
+      }
+    ],
+    "posts": [
+      {
+        "id": 1,
+        "published": 1541701986971,
+        "location": [
+          53.2734,
+          -7.77832031
+        ],
+        "category": "tv_shows",
+        "liked_by": [
+          "alberto.soto",
+          "albert.pernia"
+        ],
+        "commented_by": [
+          "jordi.male"
+        ]
+      },
+      {
+        "id": 6,
+        "published": 1541701960611,
+        "location": [
+          51.2734,
+          -7.77832031
+        ],
+        "category": "architecture",
+        "liked_by": [
+          "albert.pernia"
+        ]
+      },
+      {
+        "id": 7,
+        "published": 1541701962804,
+        "location": [
+          51.2234,
+          -7.77832031
+        ],
+        "category": "architecture",
+        "liked_by": [
+          "sergi.simo"
+        ]
+      }
+    ]
+  },
+  {
+    "username": "albert.pernia",
+    "followers": 4,
+    "follows": 4,
+    "activity": 2.0,
+    "connections": [
+      {
+        "username": "claudia.peiro",
+        "since": 1524236179270,
+        "visits": 3,
+        "likes": 2,
+        "comments": 0
+      },
+      {
+        "username": "culinaryvictim",
+        "since": 1465461297135,
+        "visits": 6,
+        "likes": 2,
+        "comments": 0
+      },
+      {
+        "username": "sergi.simo",
+        "since": 1535401335421,
+        "visits": 6,
+        "likes": 1,
+        "comments": 0
+      },
+      {
+        "username": "alberto.soto",
+        "since": 1493714186903,
+        "visits": 2,
+        "likes": 1,
+        "comments": 0
+      }
+    ],
+    "posts": [
+      {
+        "id": 2,
+        "published": 1541701945388,
+        "location": [
+          41.6517501,
+          -0.9300004
+        ],
+        "category": "travel",
+        "liked_by": [
+          "sergi.simo"
+        ]
+      },
+      {
+        "id": 14,
+        "published": 1541701984005,
+        "location": [
+          36.3196,
+          138.7641
+        ],
+        "category": "animals",
+        "liked_by": [
+          "claudia.peiro",
+          "jordi.male"
+        ],
+        "commented_by": [
+          "claudia.peiro"
+        ]
+      },
+      {
+        "id": 15,
+        "published": 1541701941567,
+        "location": [
+          36.3196,
+          137.7641
+        ],
+        "category": "sports",
+        "liked_by": [
+          "culinaryvictim",
+          "claudia.peiro"
+        ],
+        "commented_by": [
+          "alberto.soto"
+        ]
+      }
+    ]
+  },
+  {
+    "username": "culinaryvictim",
+    "followers": 5,
+    "follows": 3,
+    "activity": 15.0,
+    "connections": [
+      {
+        "username": "albert.pernia",
+        "since": 1496653178563,
+        "visits": 5,
+        "likes": 1,
+        "comments": 1
+      },
+      {
+        "username": "alberto.soto",
+        "since": 1518925879447,
+        "visits": 3,
+        "likes": 1,
+        "comments": 0
+      },
+      {
+        "username": "eduard.de.torres",
+        "since": 1500096968702,
+        "visits": 2,
+        "likes": 0,
+        "comments": 0
+      }
+    ],
+    "posts": [
+      {
+        "id": 3,
+        "published": 1541701950723,
+        "location": [
+          41.337,
+          2.1224
+        ],
+        "category": "tv_shows",
+        "liked_by": [
+          "claudia.peiro",
+          "albert.pernia",
+          "eduard.de.torres",
+          "alberto.soto"
+        ],
+        "commented_by": [
+          "eduard.de.torres"
+        ]
+      },
+      {
+        "id": 13,
+        "published": 1541701980516,
+        "location": [
+          42.337,
+          2.1224
+        ],
+        "category": "science_tech",
+        "liked_by": [
+          "albert.pernia",
+          "alberto.soto",
+          "eduard.de.torres"
+        ]
+      }
+    ]
+  },
+  {
+    "username": "alberto.soto",
+    "followers": 3,
+    "follows": 3,
+    "activity": 20.0,
+    "connections": [
+      {
+        "username": "culinaryvictim",
+        "since": 1451675273883,
+        "visits": 4,
+        "likes": 2,
+        "comments": 0
+      },
+      {
+        "username": "albert.pernia",
+        "since": 1510970210105,
+        "visits": 2,
+        "likes": 0,
+        "comments": 1
+      },
+      {
+        "username": "claudia.peiro",
+        "since": 1460879169422,
+        "visits": 4,
+        "likes": 1,
+        "comments": 0
+      }
+    ],
+    "posts": [
+      {
+        "id": 10,
+        "published": 1541701970444,
+        "location": [
+          42.939,
+          12.0684
+        ],
+        "category": "fitness",
+        "liked_by": [
+          "eduard.de.torres",
+          "albert.pernia"
+        ]
+      },
+      {
+        "id": 19,
+        "published": 1541702002660,
+        "location": [
+          41.076,
+          11.0684
+        ],
+        "category": "sports",
+        "liked_by": [
+          "culinaryvictim",
+          "sergi.simo",
+          "jordi.male"
+        ]
+      }
+    ]
+  },
+  {
+    "username": "eduard.de.torres",
+    "followers": 2,
+    "follows": 1,
+    "activity": 16.0,
+    "connections": [
+      {
+        "username": "culinaryvictim",
+        "since": 1454928676279,
+        "visits": 0,
+        "likes": 2,
+        "comments": 1
+      }
+    ],
+    "posts": [
+      {
+        "id": 16,
+        "published": 1541701993005,
+        "location": [
+          19.6707,
+          -155.6347
+        ],
+        "category": "science_tech",
+        "liked_by": [
+          "alberto.soto",
+          "albert.pernia"
+        ]
+      }
+    ]
+  },
+  {
+    "username": "jordi.male",
+    "followers": 2,
+    "follows": 3,
+    "activity": 1.0,
+    "connections": [
+      {
+        "username": "sergi.simo",
+        "since": 1461200303993,
+        "visits": 2,
+        "likes": 1,
+        "comments": 0
+      },
+      {
+        "username": "culinaryvictim",
+        "since": 1504682550962,
+        "visits": 4,
+        "likes": 0,
+        "comments": 0
+      },
+      {
+        "username": "eduard.de.torres",
+        "since": 1464219496656,
+        "visits": 2,
+        "likes": 0,
+        "comments": 0
+      }
+    ],
+    "posts": [
+      {
+        "id": 4,
+        "published": 1541701953532,
+        "location": [
+          24.4146,
+          -102.8663
+        ],
+        "category": "animals"
+      },
+      {
+        "id": 5,
+        "published": 1541701956740,
+        "location": [
+          25,
+          -101.8663
+        ],
+        "category": "food",
+        "liked_by": [
+          "sergi.simo",
+          "albert.pernia"
+        ]
+      },
+      {
+        "id": 9,
+        "published": 1541701967556,
+        "location": [
+          24.9866,
+          -102
+        ],
+        "category": "style"
+      }
+    ]
+  },
+  {
+    "username": "sergi.simo",
+    "followers": 2,
+    "follows": 4,
+    "activity": 4.0,
+    "connections": [
+      {
+        "username": "albert.pernia",
+        "since": 1512320774647,
+        "visits": 2,
+        "likes": 1,
+        "comments": 1
+      },
+      {
+        "username": "alberto.soto",
+        "since": 1494150854397,
+        "visits": 5,
+        "likes": 1,
+        "comments": 0
+      },
+      {
+        "username": "claudia.peiro",
+        "since": 1495348981925,
+        "visits": 2,
+        "likes": 1,
+        "comments": 0
+      },
+      {
+        "username": "jordi.male",
+        "since": 1460840343065,
+        "visits": 2,
+        "likes": 1,
+        "comments": 0
+      }
+    ],
+    "posts": [
+      {
+        "id": 12,
+        "published": 1541701975172,
+        "location": [
+          45.6721,
+          24.9945
+        ],
+        "category": "architecture",
+        "liked_by": [
+          "albert.pernia",
+          "jordi.male"
+        ]
+      }
+    ]
+  }
+]

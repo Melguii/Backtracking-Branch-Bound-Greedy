@@ -1,0 +1,71 @@
+[
+  {
+    "id": 1,
+    "reliability": 0.5,
+    "connectsTo": [
+      {
+        "to": 3,
+        "name": "c13", 
+        "cost": 2
+      },
+      {
+        "to": 2,
+        "name": "c12", 
+        "cost": 1
+      }
+
+    ]
+  },
+  {
+    "id": 2,
+    "reliability": 0.85,
+    "connectsTo": [
+      {
+        "to": 4,
+        "name": "c24", 
+        "cost": 4
+      },
+      {
+        "to": 1,
+        "name": "c12", 
+        "cost": 1
+      }
+
+    ]
+  },
+  {
+    "id": 3,
+    "reliability": 0.25,
+    "connectsTo": [
+      {
+        "to": 1,
+        "name": "c13", 
+        "cost": 2
+      },
+      {
+        "to": 4,
+        "name": "c34", 
+        "cost": 1
+      }
+
+    ]
+  },
+  {
+    "id": 4,
+    "reliability": 0.15,
+    "connectsTo": [
+      {
+        "to": 2,
+        "name": "c24", 
+        "cost": 4
+      },
+      {
+        "to": 3,
+        "name": "c34", 
+        "cost": 1
+      }
+
+    ]
+  }
+
+]

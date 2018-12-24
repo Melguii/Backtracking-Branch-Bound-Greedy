@@ -9,9 +9,6 @@ import java.util.Scanner;
 public class Menu {
     private int opcio;
 
-
-
-
     /**
      * S'ocupa de detectar quin és el fitxer escollit per obrir
      * @param args String dels arguments passats abans d'iniciar el programa

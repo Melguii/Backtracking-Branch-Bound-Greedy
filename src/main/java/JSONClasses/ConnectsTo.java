@@ -8,6 +8,7 @@ public class ConnectsTo {
     private int to;
     private String name;
     private int cost;
+    private Node node;
 
     public ConnectsTo() {
         this.to = to;

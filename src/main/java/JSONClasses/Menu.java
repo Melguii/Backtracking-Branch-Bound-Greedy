@@ -7,42 +7,58 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
-    private int opcio;
+    private int opcioMenuFitxers;
 
     /**
-     * S'ocupa de detectar quin és el fitxer escollit per obrir
-     * @param args String dels arguments passats abans d'iniciar el programa
-     * @return Retorna una variable tipus FileReader per tal que el fitxer pugui ser llegit/interpretat
+     *
+     * @return
      */
-    public FileReader menuFitxers(String[] args) {
-        FileReader fitxer;
-        fitxer = seleccioFitxer(args);
-        return fitxer;
-    }
-
-    /**
-     * Control del nom de fitxer introduit( mirem si es correcte o si no existeix, i per tant hem de mostrar un error)
-     * també establim que tots els fitxers estaran a la carpeta datasets
-     * @param args String dels arguments passats abans d'iniciar el programa
-     * @return Retorna una variable tipus FileReader per tal que el fitxer pugui ser llegit/interpretat
-     */
-    private FileReader seleccioFitxer(String[] args) {
-        FileReader fitxer = null;
-        String ubicacio = new String();
-        ubicacio = "datasets/" + args[2];
+    public int seleccioMenuFitxer () {
+        String opcioLlegida;
+        int opcioInt;
         do {
-            try {
-                fitxer = new FileReader(ubicacio);
-            } catch (FileNotFoundException e) {
-                System.out.println("Error fitxer especificat no trobat (ha d'estar a la carpeta datasets),no ens petaras \nel programa tan facilment, fem PAED (⌐■_■)");
-                System.out.println("La nostra generositat no coneix limits, trona'm a introduir nom del fitxer :):");
-                Scanner sc = new Scanner(System.in);
-                ubicacio = "datasets/" + sc.nextLine();
-            }
-        } while (fitxer == null);
-        return fitxer;
+            mostraMenuFitxers();
+            Scanner sc = new Scanner(System.in);
+            opcioLlegida = sc.nextLine();
+        } while(comprovacioErrorsOpcio(opcioLlegida,1,2));
+        return Integer.parseInt(opcioLlegida);
     }
 
+    /**
+     * Metode que s'ocupa de comprar que la opcio introduida per l'usuari segons un menu sigui valida
+     * @param opcioLlegida
+     * @param intervalMenor
+     * @param intervalMajor
+     * @return
+     */
+    private boolean comprovacioErrorsOpcio(String opcioLlegida, int intervalMenor, int intervalMajor) {
+        int i = 0;
+        int opcio;
+        if (opcioLlegida.length() == 0) {
+            System.out.println("Error no has introduit cap opcio");
+            return true;
+        }
+        else{
+            while (i < opcioLlegida.length()) {
+                if (opcioLlegida.charAt(i) < '0' || opcioLlegida.charAt(i) > '9') {
+                    System.out.println("Error has introduit algun caracter que no es numero");
+                    return true;
+                }
+                i++;
+            }
+            opcio = Integer.parseInt(opcioLlegida);
+            if (opcio < intervalMenor || opcio > intervalMajor) {
+                System.out.println("La teva introducció no es cap de les opcions disponibles");
+                return true;
+            }
+        }
+        return false;
+    }
+    private void mostraMenuFitxers() {
+        System.out.println("1.Fitxers per defecte (nodes.json, servers.json, users.json)");
+        System.out.println("2.Soc informatic, tinc fitxers propis ʘ‿ʘ");
+        System.out.println("De quins fitxers vols realiztar la lectura?:");
+    }
     /**
      * Metode de busqueda binaria, per tal de buscar un username concret (concretament el que busquem
      * és que ens passen per argument, per tal de poder mostrar la comparacio de prioritats d'aquell

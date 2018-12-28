@@ -9,6 +9,8 @@ public class Node {
     private int id;
     private double reliability;
     private List<ConnectsTo> connectsTo = null;
+    private int location []; //latitud, longitud
+    private ArrayList <Integer> reachable_from;
 
     public Node() {
         this.id = id;
@@ -40,4 +42,23 @@ public class Node {
         this.connectsTo = connectsTo;
     }
 
+    public int[] getLocation() {
+        return location;
+    }
+
+    public void setLocation(int[] location) {
+        this.location = location;
+    }
+
+    public ArrayList<Integer> getReachable_from() {
+        return reachable_from;
+    }
+
+    public void setReachable_from(ArrayList<Integer> reachable_from) {
+        this.reachable_from = reachable_from;
+    }
+
+    public void referenciarConnexionsNodes () {
+
+    }
 }

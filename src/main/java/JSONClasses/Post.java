@@ -6,7 +6,7 @@ import java.util.List;
 public class Post {
     private int          id;
     private long         published;
-    private List<Float>  location;
+    private List<Double>  location;
     private String       category;
     private List<String> liked_by;
     private List<String> commented_by;
@@ -33,7 +33,7 @@ public class Post {
      * Constructor de Post, necessari per establir a de quin tipus concret es la interficie List
      */
     public Post() {
-        this.location = new ArrayList<Float>();
+        this.location = new ArrayList<Double>();
         this.liked_by = new ArrayList<String>();
         this.commented_by = new ArrayList<String>();
     }
@@ -70,21 +70,6 @@ public class Post {
         this.published = published;
     }
 
-    /**
-     * Getter de Location
-     * @return Valors actuals que té la l'atribut de tipus llista Location
-     */
-    public List<Float> getLocation() {
-        return location;
-    }
-
-    /**
-     * Setter de Location
-     * @param location Valors que volem assignar a l'atribut tipus llista location
-     */
-    public void setLocation(List<Float> location) {
-        this.location = location;
-    }
 
     /**
      * Getter  de Category
@@ -160,5 +145,13 @@ public class Post {
         double dlatitud = latitudRef-this.location.get(0);
         double dlongitud = longitudRef-this.location.get(1);
         comparacioUbicacio = (int) (100000 *(2 * 6371* Math.asin(Math.sqrt(Math.pow(Math.sin(Math.toRadians(dlatitud/2)),(float)2)+Math.cos(Math.toRadians(this.location.get(0)))*Math.cos(Math.toRadians(latitudRef))*Math.pow(Math.sin(Math.toRadians(dlongitud/2)),2)))));
+    }
+
+    public List<Double> getLocation() {
+        return location;
+    }
+
+    public void setLocation(List<Double> location) {
+        this.location = location;
     }
 }

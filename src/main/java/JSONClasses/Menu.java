@@ -8,54 +8,67 @@ import java.util.Scanner;
 
 public class Menu {
     private int opcioMenuFitxers;
-
+    private int opcioMenuDisponibilitat;
+    private int opcioMenuDistribucioCarrega;
     /**
-     *
-     * @return
+     * Mostrem a l'usuari les diferentes opcions del menu de fitxers(que et pregunta sobre quin son els fitxers que vols utilitzar)
      */
-    public int seleccioMenuFitxer () {
+    public void seleccioMenuFitxer () {
         String opcioLlegida;
         int opcioInt;
         do {
+            //Anem mostrant el menu de fitxers constantment, fins que l'opcio sigui valida
             mostraMenuFitxers();
+            //L'usuari elegeix l'opcio
             Scanner sc = new Scanner(System.in);
             opcioLlegida = sc.nextLine();
         } while(comprovacioErrorsOpcio(opcioLlegida,1,2));
-        return Integer.parseInt(opcioLlegida);
+        //Igualem l'opcio llegida (amb comprovacio d'errors a l'atribut de la classe
+        opcioMenuFitxers = Integer.parseInt(opcioLlegida);
     }
 
     /**
      * Metode que s'ocupa de comprar que la opcio introduida per l'usuari segons un menu sigui valida
-     * @param opcioLlegida
-     * @param intervalMenor
-     * @param intervalMajor
-     * @return
+     * @param opcioLlegida Opcio introduida per l'usuari en format de cadena de caracters
+     * @param intervalMenor Nombre més petit de totes les opcions disponibles
+     * @param intervalMajor Nombre més gran de totes les opcions disponibles
+     * @return Si hi ha hagut algun error i que per tant no sigui una opcio valida
      */
     private boolean comprovacioErrorsOpcio(String opcioLlegida, int intervalMenor, int intervalMajor) {
         int i = 0;
         int opcio;
+        //Comprovem que s'hagi introduit alguna cosa
         if (opcioLlegida.length() == 0) {
-            System.out.println("Error no has introduit cap opcio");
+            System.out.println("Error no has introduit cap opcio\n");
             return true;
         }
         else{
+            //Anem recorrent tots els caracters mirant si n'hi ha algun que no sigui valid
             while (i < opcioLlegida.length()) {
                 if (opcioLlegida.charAt(i) < '0' || opcioLlegida.charAt(i) > '9') {
-                    System.out.println("Error has introduit algun caracter que no es numero");
+                    System.out.println("Error has introduit algun caracter que no es numero\n");
                     return true;
                 }
                 i++;
             }
+            //Passem l'opcio introduida a numero
             opcio = Integer.parseInt(opcioLlegida);
+            //Mirem que l'opcio introduida estigui entre l'interval de les opcions donades
             if (opcio < intervalMenor || opcio > intervalMajor) {
-                System.out.println("La teva introducció no es cap de les opcions disponibles");
+                System.out.println("La teva introducció no es cap de les opcions disponibles\n");
                 return true;
             }
         }
+        //Si no hi ha cap error retornem fals
         return false;
     }
+
+    /**
+     * Metode que s'ocupa de mostrar les diferents opcions que hi ha respecte als fitxers a introduir
+     */
     private void mostraMenuFitxers() {
-        System.out.println("1.Fitxers per defecte (nodes.json, servers.json, users.json)");
+        //Mostrem informacio sobre cadascuna de les opcions
+        System.out.println("1.Fitxers per defecte (nodes_plus.json, servers_plus.json, users.json)");
         System.out.println("2.Soc informatic, tinc fitxers propis ʘ‿ʘ");
         System.out.println("De quins fitxers vols realiztar la lectura?:");
     }
@@ -108,75 +121,60 @@ public class Menu {
     }
 
     /**
-     * quickSort que ens servira per ordenar el array users per fer la busqueda binaria
-     * @param p Array de users que volem ordenar
-     * @param i Principi del array
-     * @param j Final del array
-     * @return Retornem el array introduit totalment ordenat
+     * Metode que ens permet seleccionar una opcio per tal de dur a termer la distrubucio de carrega o disponibilitat
+     * @param texto Text que indica a l'usuari el que se li està demanant
      */
-    public User [] quickSort (User [] p, int i, int j) {
-        int s;
-        int t;
-        int array_aux_ij [] = new int [2];
-        int array_aux_st [] = new int [2];
-
-        if (i >= j) {
-            return p;
+    public void seleccioMenuMode(String texto) {
+        String opcio;
+        do {
+            mostarMenuModes(texto);
+            //El usuari introdueix l'opcio desitjada
+            Scanner sc = new Scanner (System.in);
+            opcio = sc.nextLine();
+            //Repetirem el proces fins que s'introdueixi una opcio correcta
+        } while(comprovacioErrorsOpcio(opcio,1,5));
+        //Retornem la opcio correcta introduida per l'usuari
+        if (texto == "Distribucio de carrega") {
+            opcioMenuDistribucioCarrega = Integer.parseInt(opcio);
         }
-        else{
-            array_aux_ij[0] = i;
-            array_aux_ij[1] = j;
-            array_aux_st = particio(p,array_aux_ij);
-            s = array_aux_st[0];
-            t = array_aux_st[1];
-            p = quickSort(p,i,t);
-            p = quickSort(p,s,j);
+        else {
+            opcioMenuDisponibilitat = Integer.parseInt(opcio);
         }
-        return p;
     }
 
     /**
-     * Metode que ens serveix per tal de poder realitzar correctament el quickSort
-     * @param p Array de users que volem ordenar
-     * @param array_aux_ij La i i la j en forma de array per tal  que el seu valor
-     *                     canvii tambe en el  metode quicksort
-     * @return Els nous valors de s i t
+     * Mostra el menu amb tots els modes possibles
+     * @param texto Text que indica a l'usuari el que se li ho està demanant
      */
-    private int [] particio (User [] p, int array_aux_ij[]) {
-        int mig;
-        User pivot;
-        User tmp = new User();
-        int s;
-        int t;
-        s = array_aux_ij[0];
-        t = array_aux_ij[1];
-        mig = (array_aux_ij[0] + array_aux_ij[1])/2;
-        pivot = p[mig];
-        while (s <= t) {
-            while (pivot.getUsername().compareTo(p[s].getUsername()) > 0) {
-                s = s + 1;
-            }
-            while(pivot.getUsername().compareTo(p[t].getUsername()) < 0) {
-                t = t - 1;
-            }
-            if (s < t) {
-                tmp = p[s];
-                p[s] = p[t];
-                p[t] = tmp;
-                s = s + 1;
-                t = t - 1;
-            }
-            else {
-                if (s == t) {
-                    s = s + 1;
-                    t = t - 1;
-                }
-            }
-        }
-        int [] array_aux_st = new int[2];
-        array_aux_st[0]= s;
-        array_aux_st[1]=t;
+    private void mostarMenuModes (String texto) {
+        System.out.println("1.Backtracking");
+        System.out.println("2.Branch & Bound");
+        System.out.println("3.Greedy");
+        System.out.println("4.Greedy + Backtracking");
+        System.out.println("5.Greedy + Branch & Bound");
+        System.out.println("Selecciona una opcio per realizar la " + texto);
+    }
+    public int getOpcioMenuFitxers() {
+        return opcioMenuFitxers;
+    }
 
-        return array_aux_st;
+    public void setOpcioMenuFitxers(int opcioMenuFitxers) {
+        this.opcioMenuFitxers = opcioMenuFitxers;
+    }
+
+    public int getOpcioMenuDisponibilitat() {
+        return opcioMenuDisponibilitat;
+    }
+
+    public void setOpcioMenuDisponibilitat(int opcioMenuDisponibilitat) {
+        this.opcioMenuDisponibilitat = opcioMenuDisponibilitat;
+    }
+
+    public int getOpcioMenuDistribucioCarrega() {
+        return opcioMenuDistribucioCarrega;
+    }
+
+    public void setOpcioMenuDistribucioCarrega(int opcioMenuDistribucioCarrega) {
+        this.opcioMenuDistribucioCarrega = opcioMenuDistribucioCarrega;
     }
 }

@@ -40,4 +40,11 @@ public class ConnectsTo {
         this.cost = cost;
     }
 
+    public Node getNode() {
+        return node;
+    }
+
+    public void setNode(Node node) {
+        this.node = node;
+    }
 }

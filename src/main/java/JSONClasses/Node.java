@@ -1,6 +1,8 @@
 
 package JSONClasses;
 
+import Busqueda.BusquedaBinaria;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,9 +10,7 @@ public class Node {
 
     private int id;
     private double reliability;
-    private List<ConnectsTo> connectsTo = null;
-    private int location []; //latitud, longitud
-    private ArrayList <Integer> reachable_from;
+    private List<ConnectsTo> connectsTo;
 
     public Node() {
         this.id = id;
@@ -42,23 +42,22 @@ public class Node {
         this.connectsTo = connectsTo;
     }
 
-    public int[] getLocation() {
-        return location;
+    /**
+     * Metode que serveix per "traduir" l'ID en format String que tenim a connectsTo, a tipus Node
+     * @param nodes Llista que conté tots els nodes obtinguts en el JSON ordenats (per tal de poder fer el Quicksort)
+     */
+    public void referenciarConnexions (Node [] nodes) {
+        BusquedaBinaria b = new BusquedaBinaria();
+        int posicio;
+        //Bucle que recorre tots els connectsTo per tal de realitzar la traduccio en tots les conexions de un Node en concret
+        for(int j = 0; j < connectsTo.size();j++) {
+            //Fem la usqueda binaria per saber en quina posicio del array de nodes es troba el node cercat
+            posicio = b.busquedaBinaria(connectsTo.get(j).getTo(),nodes);
+            //Referenciem sempre i quan hagi trobat el node
+            if (posicio != -1) {
+                connectsTo.get(j).setNode(nodes[posicio]);
+            }
+        }
     }
 
-    public void setLocation(int[] location) {
-        this.location = location;
-    }
-
-    public ArrayList<Integer> getReachable_from() {
-        return reachable_from;
-    }
-
-    public void setReachable_from(ArrayList<Integer> reachable_from) {
-        this.reachable_from = reachable_from;
-    }
-
-    public void referenciarConnexionsNodes () {
-
-    }
 }

@@ -9,7 +9,6 @@ import java.util.List;
 public class Solution {
     Server s;
     List <User> users;
-    float activitatTotal;
     double carrega;
 
     public Solution () {
@@ -33,13 +32,6 @@ public class Solution {
         this.users = users;
     }
 
-    public float getActivitatTotal() {
-        return activitatTotal;
-    }
-
-    public void setActivitatTotal(float activitatTotal) {
-        this.activitatTotal = activitatTotal;
-    }
 
     public double getCarrega() {
         return carrega;
@@ -50,7 +42,6 @@ public class Solution {
     }
 
     public void sumarCarrega (User u) {
-        int w = 0;
         carrega = carrega + Math.pow(u.calculHaversine(s.getLocation()),u.getActivity());
     }
 

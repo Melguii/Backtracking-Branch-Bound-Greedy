@@ -9,13 +9,16 @@ import java.util.List;
 public class Backtracking {
     public double backtringDistribucioCarrega(Server[] servers, int posicio, double best,List <Solution> possibleSolucio,List <Solution> solution, User[] users) {
         if (posicio == users.length) {
-            solution = new ArrayList<Solution>(possibleSolucio);
+            solution = new ArrayList<Solution>();
+            for (int i = 0; i < possibleSolucio.size();i++) {
+                solution.add(possibleSolucio.get(i));
+            }
+
             best = calculDiferencial(possibleSolucio);
             return best;
         }
         else {
             int y;
-            double d;
             for (int i = posicio; i < users.length;i++) {
                 for (int j = 0; j < servers.length;j++) {
                     if(calculDiferencial (possibleSolucio) < best) {
@@ -29,16 +32,13 @@ public class Backtracking {
                             s.setS(servers[j]);
                         }
                         s.getUsers().add(users[i]);
+                        s.sumarCarrega(users[i]);
                         possibleSolucio.add(s);
-
-                        d = backtringDistribucioCarrega(servers,i + 1,best,possibleSolucio, solution, users);
-                        if (d != -1) {
-                            best = d;
-                        }
+                        best = backtringDistribucioCarrega(servers,i + 1,best,possibleSolucio, solution, users);
                         possibleSolucio.remove(possibleSolucio.size() - 1);
                     }
                     else {
-                        return -1;
+                        return best;
                     }
                 }
             }

@@ -62,7 +62,8 @@ public class Logica {
                 Backtracking b = new Backtracking();
                 List <Solution > possibleSolucio = new ArrayList<Solution>();
                 List <Solution> solution =  new ArrayList<Solution>();
-                b.backtringDistribucioCarrega(servers,0, Double.MAX_VALUE, possibleSolucio, solution, users);
+                double hola = b.backtringDistribucioCarrega(servers,0, Double.MAX_VALUE, possibleSolucio, solution, users);
+                //TODO REFERENCIACIO DE SOLUTIONS
                 for (int w = 0; w < solution.size();w++) {
                     System.out.println("\nNom del server:" + solution.get(w).getS().getId());
                     for (int t = 0; t < solution.get(w).getUsers().size(); t++) {

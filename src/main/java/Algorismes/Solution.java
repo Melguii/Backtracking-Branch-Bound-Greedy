@@ -44,5 +44,18 @@ public class Solution {
     public void sumarCarrega (User u) {
         carrega = carrega + Math.pow(u.calculHaversine(s.getLocation()),u.getActivity());
     }
+    public Object clone()
+    {
+        Object clone = null;
+        try
+        {
+            clone = super.clone();
+        }
+        catch(CloneNotSupportedException e)
+        {
+            // No deberia suceder
+        }
+        return clone;
+    }
 
 }

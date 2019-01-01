@@ -3,43 +3,53 @@ package Algorismes;
 import JSONClasses.Server;
 import JSONClasses.User;
 
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-public class Backtracking {
-    public double backtringDistribucioCarrega(Server[] servers, int posicio, double best,List <Solution> possibleSolucio,List <Solution> solution, User[] users) {
+
+public class Backtracking{
+    public double backtringDistribucioCarrega(Server[] servers, int posicio, double best,List <Solution> possibleSolucio,ArrayList<Solution> solution, User[] users) {
         if (posicio == users.length) {
-            solution = new ArrayList<Solution>();
-            for (int i = 0; i < possibleSolucio.size();i++) {
-                solution.add(possibleSolucio.get(i));
+            solution = new ArrayList <Solution> ();
+            for (Solution s: possibleSolucio){
+                solution.add((Solution) s.clone());
             }
-
             best = calculDiferencial(possibleSolucio);
             return best;
         }
         else {
             int y;
-            for (int i = posicio; i < users.length;i++) {
-                for (int j = 0; j < servers.length;j++) {
-                    if(calculDiferencial (possibleSolucio) < best) {
-                        y = serverEncontrado(possibleSolucio,servers[j].getId());
-                        Solution s;
-                        if(y != -1) {
-                            s = possibleSolucio.get(y);
-                        }
-                        else {
-                            s = new Solution();
-                            s.setS(servers[j]);
-                        }
-                        s.getUsers().add(users[i]);
-                        s.sumarCarrega(users[i]);
+            for (int j = 0; j < servers.length;j++) {
+                if(calculDiferencial(possibleSolucio) < best) {
+                    y = serverEncontrado(possibleSolucio,servers[j].getId());
+                    Solution s;
+                    if(y != -1) {
+                        s = possibleSolucio.get(y);
+                        s.getUsers().add(users[posicio]);
+                        s.sumarCarrega(users[posicio]);
+                        possibleSolucio.set(y,s);
+                    }
+                    else {
+                        s = new Solution();
+                        s.setS(servers[j]);
+                        s.getUsers().add(users[posicio]);
+                        s.sumarCarrega(users[posicio]);
                         possibleSolucio.add(s);
-                        best = backtringDistribucioCarrega(servers,i + 1,best,possibleSolucio, solution, users);
+                    }
+                    int seguent = posicio + 1;
+                    best = backtringDistribucioCarrega(servers,seguent,best,possibleSolucio, solution, users);
+                    if(y == -1) {
                         possibleSolucio.remove(possibleSolucio.size() - 1);
                     }
                     else {
-                        return best;
+                        possibleSolucio.get(y).getUsers().remove( possibleSolucio.get(y).getUsers().size() -1);
                     }
+                }
+                else {
+                    return best;
                 }
             }
         }

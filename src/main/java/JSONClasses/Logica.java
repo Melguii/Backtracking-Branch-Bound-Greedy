@@ -16,6 +16,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Logica {
     User [] users;
@@ -61,7 +62,7 @@ public class Logica {
             case 1:
                 Backtracking b = new Backtracking();
                 List <Solution > possibleSolucio = new ArrayList<Solution>();
-                List <Solution> solution =  new ArrayList<Solution>();
+                ArrayList<Solution> solution =  new ArrayList <Solution>();
                 double hola = b.backtringDistribucioCarrega(servers,0, Double.MAX_VALUE, possibleSolucio, solution, users);
                 //TODO REFERENCIACIO DE SOLUTIONS
                 for (int w = 0; w < solution.size();w++) {

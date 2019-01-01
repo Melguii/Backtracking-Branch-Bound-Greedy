@@ -152,7 +152,7 @@ public class User {
     }
     public void calcularLocalitzacioUsuari () {
         location.add(posts.get(posts.size() - 1).getLocation().get(0));
-        location.add(posts.get(posts.size() - 1).getLocation().get(0));
+        location.add(posts.get(posts.size() - 1).getLocation().get(1));
     }
     public double calculHaversine (List<Double> locationRef) {
         double comparacioUbicacio;

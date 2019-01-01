@@ -33,36 +33,46 @@ public class Backtracking {
             for (int i = 0; i < possibleSolucio.size();i++) {
                 solution.add(possibleSolucio.get(i));
             }
-
+            System.out.println("--------------------------");
+            for (int w = 0; w < solution.size();w++) {
+                System.out.println("\nNom del server:" + solution.get(w).getS().getId());
+                for (int t = 0; t < solution.get(w).getUsers().size(); t++) {
+                    System.out.println("User:" + solution.get(w).getUsers().get(t).getUsername());
+                }
+            }
             best = calculDiferencial(possibleSolucio);
             return best;
         }
         else {
             int y;
-            for (int i = posicio; i < users.length;i++) {
-                for (int j = 0; j < servers.length;j++) {
-                    if(calculDiferencial (possibleSolucio) < best) {
-                        y = serverEncontrado(possibleSolucio,servers[j].getId());
-                        Solution s;
-                        if(y != -1) {
-                            s = possibleSolucio.get(y);
-                        }
-                        else {
-                            s = new Solution();
-                            s.setS(servers[j]);
-                        }
-                        s.getUsers().add(users[i]);
-                        s.sumarCarrega(users[i]);
+            for (int j = 0; j < servers.length;j++) {
+                if(calculDiferencial (possibleSolucio) < best) {
+                    y = serverEncontrado(possibleSolucio, servers[j].getId());
+                    Solution s;
+                    if (y != -1) {
+                        s = possibleSolucio.get(y);
+                        s.getUsers().add(users[posicio]);
+                        s.sumarCarrega(users[posicio]);
+                        possibleSolucio.set(y,s);
+                    } else {
+                        s = new Solution();
+                        s.setS(servers[j]);
+                        s.getUsers().add(users[posicio]);
+                        s.sumarCarrega(users[posicio]);
                         possibleSolucio.add(s);
                     }
                     int seguent = posicio + 1;
-                    best = backtringDistribucioCarrega(servers,seguent,best,possibleSolucio, solution, users);
-                    if(y == -1) {
+                    best = backtringDistribucioCarrega(servers, seguent, best, possibleSolucio, solution, users);
+                    if (y == -1) {
                         possibleSolucio.remove(possibleSolucio.size() - 1);
                     }
                     else {
-                        return best;
+                        possibleSolucio.get(y).restarCarrega(possibleSolucio.get(y).getUsers().get(possibleSolucio.get(y).getUsers().size()-1));
+                        possibleSolucio.get(y).getUsers().remove(possibleSolucio.get(y).getUsers().size()-1);
                     }
+                }
+                else {
+                    return best;
                 }
             }
         }

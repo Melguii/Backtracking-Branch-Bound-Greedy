@@ -42,20 +42,15 @@ public class Solution {
     }
 
     public void sumarCarrega (User u) {
-        carrega = carrega + Math.pow(u.calculHaversine(s.getLocation()),u.getActivity());
+        /*System.out.println("----------------------------");
+        System.out.println((u.getUsername()));
+        System.out.println(s.getCountry());
+        System.out.println(u.calculHaversine(s.getLocation()));
+        System.out.println(Math.pow(u.calculHaversine(s.getLocation()),u.getActivity()));*/
+        carrega = carrega + 0.25*u.calculHaversine(s.getLocation()) + 0.75*u.getActivity();//Math.pow(u.calculHaversine(s.getLocation()),u.getActivity());
     }
-    public Object clone()
-    {
-        Object clone = null;
-        try
-        {
-            clone = super.clone();
-        }
-        catch(CloneNotSupportedException e)
-        {
-            // No deberia suceder
-        }
-        return clone;
+    public void restarCarrega (User u) {
+        carrega = carrega - 0.25*u.getActivity() - 0.75*u.calculHaversine(s.getLocation());//Math.pow(u.calculHaversine(s.getLocation()),u.getActivity());
     }
 
 }

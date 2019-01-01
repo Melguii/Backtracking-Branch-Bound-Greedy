@@ -16,7 +16,6 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Logica {
     User [] users;
@@ -57,6 +56,11 @@ public class Logica {
         }
     }
 
+    /**
+     *
+     *
+     * @param opcio
+     */
     public void execucioMenuModeDisponibilitat (int opcio) {
         switch (opcio) {
             case 1:
@@ -156,6 +160,13 @@ public class Logica {
         } while (fitxer == null);
         return fitxer;
     }
+
+    /**
+     *
+     *
+     *
+     * @param user
+     */
     private void obtindrePosts(User user) {
         for (int j = 0; j < user.getPosts().size(); j++) {
             posts.add(user.getPosts().get(j));

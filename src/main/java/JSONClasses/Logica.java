@@ -23,23 +23,27 @@ public class Logica {
     Server [] servers;
     List<Post> posts;
 
-    //Constructor de Logica (la classe actua)
+    //Constructor de Logica (la classe actual)
     public Logica () {
         posts = new ArrayList<Post>();
     }
 
     /**
-     * Metode que s'ocupa de realizar un proces o un altre segons la opcio introduida per l'usuari en el menu de fitxers
+     * Metode que s'ocupa de realitzar un proces o un altre segons la opcio introduida per l'usuari en el menu de fitxers
+     *
      * @param opcioFitxer Opcio introduida per l'usuari en el menu fitxers
      */
     public void execucioMenuFitxer (int opcioFitxer) {
+
         //El nostres fitxers json sempre estaran a datasets/
         String aux = "datasets/";
+
         switch (opcioFitxer) {
             case 1:
                 //Llegim els fitxers per defecte
                 lecturaFitxers(aux + "users.json", aux + "nodes_plus.json", aux + "servers_plus.json");
                 break;
+
             case 2:
                 //Demanem a l'usuari les diferents opcions i anem llegint els fitxers, en cas d'error ja se li ho tornarà a demanar a l'usuari el nom del fitxer
                 System.out.println("Introdueix-me el nom del fitxer que conté els noms dels usuaris:");
@@ -50,20 +54,27 @@ public class Logica {
                 Scanner sc3 = new Scanner(System.in);
                 lecturaFitxers(aux + sc.nextLine(), aux + sc2.nextLine(), aux + sc3.nextLine());
                 break;
+
             default:
                 System.out.println("Error, estas intentant accedir a una opcio que no existeix");
                 break;
         }
     }
 
+    /**
+     *
+     *
+     * @param opcio
+     */
     public void execucioMenuModeDisponibilitat (int opcio) {
         switch (opcio) {
             case 1:
                 Backtracking b = new Backtracking();
                 List <Solution > possibleSolucio = new ArrayList<Solution>();
                 List <Solution> solution =  new ArrayList<Solution>();
-                double hola = b.backtringDistribucioCarrega(servers,0, Double.MAX_VALUE, possibleSolucio, solution, users);
-                //TODO REFERENCIACIO DE SOLUTIONS
+                double hola = b.backtringDistribucioCarrega(servers,0, Double.MAX_VALUE, possibleSolucio, solution, users); //NO FIQUIS MERDA NOMS DE VARIABLES SIUSPLAU
+
+                //TOTA REFERENCIACIO DE SOLUTIONS
                 for (int w = 0; w < solution.size();w++) {
                     System.out.println("\nNom del server:" + solution.get(w).getS().getId());
                     for (int t = 0; t < solution.get(w).getUsers().size(); t++) {
@@ -71,18 +82,24 @@ public class Logica {
                     }
                 }
                 break;
+
             case 2:
                 break;
+
             case 3:
                 break;
+
             case 4:
                 break;
+
             case 5:
                 break;
+
             default:
                 System.out.println("Error opcio introduida no valida");
         }
     }
+
     /**
      * S'ocupa de llegir tots els fitxers que introdueix l'usuari o es fiquen per defecte, a la mateixa vegada que comprova la seva existencia i va emplenant els atributs de la classe
      * @param nomFitxerUsers Nom que te el fitxer que conte els usuaris
@@ -93,15 +110,19 @@ public class Logica {
         FileReader fitxerUsers;
         FileReader fitxerNodes;
         FileReader fitxerServers;
+
         //Comprovem l'existencia dels diferents fitxers (users, nodes, servers)
         fitxerUsers = seleccioFitxer(nomFitxerUsers, "Users");
         fitxerNodes = seleccioFitxer(nomFitxerNodes, "Nodes");
         fitxerServers = seleccioFitxer(nomFitxerServers, "Servers");
+
         //Ara ens dediquem a anar llegint tots el fitxers
         Gson gson = new Gson();
+
         users = gson.fromJson(fitxerUsers, User[].class);
         nodes = gson.fromJson(fitxerNodes, Node[].class);
         servers = gson.fromJson(fitxerServers, Server[].class);
+
         /*JsonParser parser = new JsonParser();
         JsonArray jA = (JsonArray) parser.parse(fitxerServers);
         for (int  i = 0; i < jA.size(); i++) {
@@ -115,19 +136,24 @@ public class Logica {
             s.setLocation(arrayints);
             if(jO.get("reachable_from").)
         }*/
+
         int  i = 0;
+
         while (i < users.length) {
             obtindrePosts(users[i]);
             users[i].referenciarSeguidors(users);
             users[i].calcularLocalitzacioUsuari();
             i++;
         }
+
         Comparator c = new CompareID();
         MergeSort mergesort = new MergeSort ();
         mergesort.mergeSort(nodes,c,0, nodes.length-1);
+
         for (int j = 0; j < servers.length; j++) {
             servers[j].referenciarNodes(nodes);
         }
+
         for (int j = 0; j < nodes.length; j++) {
             nodes[j].referenciarConnexions(nodes);
         }
@@ -143,9 +169,12 @@ public class Logica {
      */
     private FileReader seleccioFitxer(String nom_fitxer, String tipus) {
         FileReader fitxer = null;
+
         do {
             try {
+
                 fitxer = new FileReader(nom_fitxer);
+
             } catch (FileNotFoundException e) {
                 System.out.println("Error fitxer que conté els "+ tipus +" no trobat (ha d'estar a la carpeta datasets),no ens petaras \nel programa tan facilment, fem PAED (⌐■_■)");
                 System.out.println("La nostra generositat no coneix limits, trona'm a introduir nom del fitxer :):");
@@ -153,13 +182,22 @@ public class Logica {
                 nom_fitxer = "datasets/" + sc.nextLine();
             }
         } while (fitxer == null);
+
         return fitxer;
     }
+
+    /**
+     *
+     *
+     *
+     * @param user
+     */
     private void obtindrePosts(User user) {
         for (int j = 0; j < user.getPosts().size(); j++) {
             posts.add(user.getPosts().get(j));
         }
     }
+
     /**
      * quickSort que ens servira per ordenar el array users per fer la busqueda binaria
      * @param p Array de users que volem ordenar

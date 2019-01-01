@@ -10,12 +10,13 @@ public class BusquedaBinaria {
      * @param arrayNodes Array de Nodes on busquem un valor concret
      * @return Posicio on s'ha trobat el id desitjat
      */
-    public int busquedaBinaria( int valorBuscat, Node[] arrayNodes) {
+    public int busquedaBinaria(int valorBuscat, Node[] arrayNodes) {
         int principi = 0;
         int fin = arrayNodes.length - 1;
         int valor_resultat = 0;
         int mig = (principi + fin)/2;
         boolean b = false;
+
         while (!b && (principi <= fin)){
             mig = (principi + fin)/2;
             if (arrayNodes[mig].getId() == valorBuscat) {

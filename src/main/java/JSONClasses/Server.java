@@ -62,14 +62,20 @@ public class Server {
     public void referenciarNodes(Node [] arrayNodes) {
         int i = 0;
         int j = 0;
+
         BusquedaBinaria b = new BusquedaBinaria();
+
         //Recorrem tot el reachable_from per tal de poder realitzar la referencia
         while (i < this.reachable_from.length) {
+
             //Realitzem la busqueda binaria que ens retorna la posicio on es troba l'id buscat en el array de nodes
             j = b.busquedaBinaria(this.reachable_from[i], arrayNodes);
+
             if (j != -1 ) {
                 nodesDisponibles.add(arrayNodes[j]);
+
             }
+
             i++;
         }
     }

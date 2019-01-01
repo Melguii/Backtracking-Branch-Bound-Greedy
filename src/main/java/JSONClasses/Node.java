@@ -49,10 +49,13 @@ public class Node {
     public void referenciarConnexions (Node [] nodes) {
         BusquedaBinaria b = new BusquedaBinaria();
         int posicio;
+
         //Bucle que recorre tots els connectsTo per tal de realitzar la traduccio en tots les conexions de un Node en concret
         for(int j = 0; j < connectsTo.size();j++) {
-            //Fem la usqueda binaria per saber en quina posicio del array de nodes es troba el node cercat
-            posicio = b.busquedaBinaria(connectsTo.get(j).getTo(),nodes);
+
+            //Fem la busqueda binaria per saber en quina posicio del array de nodes es troba el node cercat
+            posicio = b.busquedaBinaria(connectsTo.get(j).getTo(), nodes);
+
             //Referenciem sempre i quan hagi trobat el node
             if (posicio != -1) {
                 connectsTo.get(j).setNode(nodes[posicio]);

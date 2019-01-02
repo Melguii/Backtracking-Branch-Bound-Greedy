@@ -10,6 +10,7 @@ public class Menu {
     private int opcioMenuFitxers;
     private int opcioMenuDisponibilitat;
     private int opcioMenuDistribucioCarrega;
+
     /**
      * Mostrem a l'usuari les diferentes opcions del menu de fitxers(que et pregunta sobre quin son els fitxers que vols utilitzar)
      */

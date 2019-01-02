@@ -10,10 +10,12 @@ public class Solution {
     Server s;
     List <User> users;
     double carrega;
+    int sumaActivities;
 
     public Solution () {
         users = new ArrayList<User>();
         carrega = 0;
+        sumaActivities = 0;
     }
 
     public Server getS() {
@@ -47,10 +49,20 @@ public class Solution {
         System.out.println(s.getCountry());
         System.out.println(u.calculHaversine(s.getLocation()));
         System.out.println(Math.pow(u.calculHaversine(s.getLocation()),u.getActivity()));*/
-        carrega = carrega + 0.25*u.calculHaversine(s.getLocation()) + 0.75*u.getActivity();//Math.pow(u.calculHaversine(s.getLocation()),u.getActivity());
+        //TODO ELS HAVERSINE SON MES PODEROSOS QUE L'ACTIVITAT
+        sumaActivities = sumaActivities + u.getActivity();
+        carrega = carrega + u.calculHaversine(s.getLocation());//Math.pow(u.calculHaversine(s.getLocation()),u.getActivity());
     }
     public void restarCarrega (User u) {
-        carrega = carrega - 0.25*u.getActivity() - 0.75*u.calculHaversine(s.getLocation());//Math.pow(u.calculHaversine(s.getLocation()),u.getActivity());
+        carrega = carrega -   u.calculHaversine(s.getLocation());//Math.pow(u.calculHaversine(s.getLocation()),u.getActivity());
+        sumaActivities = sumaActivities - u.getActivity();
     }
 
+    public int getSumaActivities() {
+        return sumaActivities;
+    }
+
+    public void setSumaActivities(int sumaActivities) {
+        this.sumaActivities = sumaActivities;
+    }
 }

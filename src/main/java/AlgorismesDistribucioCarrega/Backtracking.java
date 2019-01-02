@@ -1,13 +1,11 @@
-package Algorismes;
+package AlgorismesDistribucioCarrega;
 
 import JSONClasses.Server;
 import JSONClasses.User;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public class Backtracking {
@@ -24,7 +22,7 @@ public class Backtracking {
      * @param users
      * @return
      */
-    public double backtringDistribucioCarrega(Server[] servers, int posicio, double best,List <Solution> possibleSolucio,List <Solution> solution, User[] users) {
+    public double backtringDistribucioCarrega(Server[] servers, int posicio, double best, List <Solution> possibleSolucio,List <Solution> solution, User[] users) {
 
         if (posicio == users.length) {
 
@@ -78,16 +76,34 @@ public class Backtracking {
         }
         return best;
     }
+
+    /**
+     *
+     *
+     * @param s
+     * @param idBuscat
+     * @return
+     */
     private int serverEncontrado (List<Solution>s, int idBuscat) {
         int position = 0;
+
         while (position < s.size()) {
             if(s.get(position).getS().getId() == idBuscat) {
                 return position;
             }
             position++;
         }
+
         return -1;
     }
+
+    /**
+     * Sumem el resultat de carrega individual de cada usuari. Si el resultat de cada un d'ells es menor, es veura reflexat en la suma
+     * de totes les carregues individuals, donant aixi un motiu d'una millor opcio.
+     *
+     * @param possibleSolution
+     * @return
+     */
     private double calculDiferencial (List <Solution> possibleSolution) {
         double resultat = 0;
         int i = 0;

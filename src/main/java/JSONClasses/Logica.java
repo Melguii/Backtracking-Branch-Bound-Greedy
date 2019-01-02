@@ -1,15 +1,12 @@
 package JSONClasses;
 
-import Algorismes.Backtracking;
-import Algorismes.Solution;
+import AlgorismesDistribucioCarrega.Backtracking;
+import AlgorismesDistribucioCarrega.Solution;
 import Sorts.MergeSort;
 import com.google.gson.Gson;
 
 import Comparators.Comparator;
 import Comparators.CompareID;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

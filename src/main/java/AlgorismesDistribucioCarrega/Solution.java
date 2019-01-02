@@ -1,4 +1,4 @@
-package Algorismes;
+package AlgorismesDistribucioCarrega;
 
 import JSONClasses.Server;
 import JSONClasses.User;
@@ -32,7 +32,6 @@ public class Solution {
         this.users = users;
     }
 
-
     public double getCarrega() {
         return carrega;
     }
@@ -41,6 +40,12 @@ public class Solution {
         this.carrega = carrega;
     }
 
+    /**
+     * La carrega d'un server es la suma de carregues de cada usuari. La carrega d'un usuari es la proximitat al servidor elevat
+     * a l'activitat que tenen amb el servidor.
+     *
+     * @param u
+     */
     public void sumarCarrega (User u) {
         /*System.out.println("----------------------------");
         System.out.println((u.getUsername()));

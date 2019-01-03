@@ -3,7 +3,7 @@ package JSONClasses;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User implements Cloneable{
     private String              username;
     private int                 activity;
     private int                 followers;
@@ -162,6 +162,9 @@ public class User {
         double dlongitud = longitudRef-this.location.get(1);
         comparacioUbicacio = ((2 * 6371* Math.asin(Math.sqrt(Math.pow(Math.sin(Math.toRadians(dlatitud/2)),(float)2)+Math.cos(Math.toRadians(this.location.get(0)))*Math.cos(Math.toRadians(latitudRef))*Math.pow(Math.sin(Math.toRadians(dlongitud/2)),2)))));
         return comparacioUbicacio;
+    }
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
 }

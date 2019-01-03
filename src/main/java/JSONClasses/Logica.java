@@ -1,7 +1,6 @@
 package JSONClasses;
 
 import AlgorismesDistribucioCarrega.Backtracking;
-import AlgorismesDistribucioCarrega.Solution;
 import Sorts.MergeSort;
 import com.google.gson.Gson;
 
@@ -62,16 +61,18 @@ public class Logica {
         switch (opcio) {
             case 1:
                 Backtracking b = new Backtracking();
-                List <Solution > possibleSolucio = new ArrayList<Solution>();
-                ArrayList<Solution> solution =  new ArrayList <Solution>();
+                List <Server> possibleSolucio = new ArrayList<Server>();
+                List<Server> solution =  new ArrayList <Server>();
                 double hola = b.backtringDistribucioCarrega(servers,0, Double.MAX_VALUE, possibleSolucio, solution, users);
-                //TODO REFERENCIACIO DE SOLUTIONS
+                System.out.println(solution.size());
                 for (int w = 0; w < solution.size();w++) {
-                    System.out.println("\nNom del server:" + solution.get(w).getS().getId());
+                    System.out.println("\nNom del server:" + solution.get(w).getId());
                     for (int t = 0; t < solution.get(w).getUsers().size(); t++) {
                         System.out.println("User:" + solution.get(w).getUsers().get(t).getUsername());
                     }
                 }
+                int hola2 = 0;
+                System.out.println("\n");
                 break;
             case 2:
                 break;

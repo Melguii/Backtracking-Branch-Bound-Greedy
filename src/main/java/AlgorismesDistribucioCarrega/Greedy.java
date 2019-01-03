@@ -1,12 +1,5 @@
 package AlgorismesDistribucioCarrega;
 
-import JSONClasses.Server;
-import JSONClasses.User;
-import AlgorismesDistribucioCarrega.Solution;
-
-import java.util.ArrayList;
-import java.util.List;
-
 //import static java.sql.JDBCType.NULL;
 
 public class Greedy {

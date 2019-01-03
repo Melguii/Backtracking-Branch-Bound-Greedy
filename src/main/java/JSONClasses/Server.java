@@ -6,13 +6,16 @@ import Busqueda.BusquedaBinaria;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Server {
+public class Server implements Cloneable {
 
     private int id;
     private String country;
     private List<Double> location = null;                   //Falta parlar si farem una ArrayList o un Array fixe de 2 posicions
     private int reachable_from [];
     private List <Node> nodesDisponibles;
+    private List <User> users;
+    private double carrega;
+    private int sumaActivities;
 
     public Server() {
         this.id = id;
@@ -20,6 +23,7 @@ public class Server {
         this.location = location;
         this.reachable_from = reachable_from;
         this.nodesDisponibles = new ArrayList <Node> ();
+        this.users = new ArrayList<User>();
     }
 
     public int getId() {
@@ -85,5 +89,53 @@ public class Server {
 
     public void setNodesDisponibles(List<Node> nodesDisponibles) {
         this.nodesDisponibles = nodesDisponibles;
+    }
+
+    public Object clone () throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public double getCarrega() {
+        return carrega;
+    }
+
+    public void setCarrega(double carrega) {
+        this.carrega = carrega;
+    }
+
+    /**
+     * La carrega d'un server es la suma de carregues de cada usuari. La carrega d'un usuari es la proximitat al servidor elevat
+     * a l'activitat que tenen amb el servidor.
+     *
+     * @param u
+     */
+    public void sumarCarrega (User u) {
+        /*System.out.println("----------------------------");
+        System.out.println((u.getUsername()));
+        System.out.println(s.getCountry());
+        System.out.println(u.calculHaversine(s.getLocation()));
+        System.out.println(Math.pow(u.calculHaversine(s.getLocation()),u.getActivity()));*/
+        sumaActivities = sumaActivities + u.getActivity();
+        carrega = carrega + u.calculHaversine(this.location);//Math.pow(u.calculHaversine(s.getLocation()),u.getActivity());
+    }
+    public void restarCarrega (User u) {
+        carrega = carrega -   u.calculHaversine(this.location);//Math.pow(u.calculHaversine(s.getLocation()),u.getActivity());
+        sumaActivities = sumaActivities - u.getActivity();
+    }
+
+    public int getSumaActivities() {
+        return sumaActivities;
+    }
+
+    public void setSumaActivities(int sumaActivities) {
+        this.sumaActivities = sumaActivities;
     }
 }

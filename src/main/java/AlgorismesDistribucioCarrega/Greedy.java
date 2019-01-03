@@ -7,11 +7,11 @@ import AlgorismesDistribucioCarrega.Solution;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.sql.JDBCType.NULL;
+//import static java.sql.JDBCType.NULL;
 
 public class Greedy {
 
-    public List<Solution> greedyDistribucioCarrega(Server[] servers, User[] users){
+    /*public List<Solution> greedyDistribucioCarrega(Server[] servers, User[] users){
         List<Solution> candidates = new ArrayList<Solution>();
         List<Solution> s = new ArrayList<Solution>();
 
@@ -45,6 +45,5 @@ public class Greedy {
     public Solution is_Solution(){
 
         return s;
-    }
-
+    }*/
 }

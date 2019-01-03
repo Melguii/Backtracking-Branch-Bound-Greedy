@@ -1,4 +1,4 @@
-package Algorismes;
+package AlgorismesDistribucioCarrega;
 
 import JSONClasses.Server;
 import JSONClasses.User;
@@ -24,7 +24,7 @@ public class Backtracking {
                 for (int i = 0; i < possibleSolucio.size();i++) {
                     solution.add(possibleSolucio.get(i));
                 }
-                System.out.println("--------------------------");
+               System.out.println("--------------------------");
                 for (int w = 0; w < solution.size();w++) {
                     System.out.println("\nNom del server:" + solution.get(w).getS().getId());
                     for (int t = 0; t < solution.get(w).getUsers().size(); t++) {
@@ -34,7 +34,7 @@ public class Backtracking {
                 System.out.println("Minim:" + minim);
                 System.out.println("Maxim:" + maxim);
                 best = posibleBest;
-                System.out.println("Best:" + best);
+                //System.out.println("Best:" + best);
                 return best;
             }
             else {
@@ -46,7 +46,6 @@ public class Backtracking {
             for (int j = 0; j < servers.length;j++) {
                 int minim = obtindreMinimArray(possibleSolucio, servers.length);
                 int maxim =  obtindreMaximArray(possibleSolucio);
-                if(Math.pow (1.05,(maxim - minim)) * calculDiferencial (possibleSolucio) < best) {
                     y = serverEncontrado(possibleSolucio, servers[j].getId());
                     Solution s;
                     if (y != -1) {
@@ -71,10 +70,6 @@ public class Backtracking {
                         possibleSolucio.get(y).getUsers().remove(possibleSolucio.get(y).getUsers().size()-1);
                     }
                 }
-                else {
-                    return best;
-                }
-            }
         }
         return best;
     }

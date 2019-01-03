@@ -11,20 +11,32 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public class Backtracking {
+    private int maxActivityBest;
+    private int minActivityBest;
+    private double maxDistance;
 
+    public Backtracking () {
+        maxActivityBest = Integer.MAX_VALUE;
+        minActivityBest = 0;
+        maxDistance = Double.MAX_VALUE;
+    }
     public double backtringDistribucioCarrega(Server[] servers, int posicio, double best,List <Solution> possibleSolucio,List <Solution> solution, User[] users) {
 
         if (posicio == users.length) {
-            int minim = obtindreMinimArray(possibleSolucio, servers.length);
+            int minim = obtindreMinimArray(possibleSolucio, servers.length,true);
             int maxim = obtindreMaximArray(possibleSolucio);
             double posibleBest = Math.pow (1.05,(maxim - minim)) * calculDiferencial(possibleSolucio);
             if (posibleBest < best) {
                 solution = new ArrayList<Solution>();
-
                 for (int i = 0; i < possibleSolucio.size();i++) {
-                    solution.add(possibleSolucio.get(i));
+                    try {
+                        solution.add((Solution) possibleSolucio.get(i).clone());
+                    } catch (CloneNotSupportedException e) {
+                        e.printStackTrace();
+                    }
                 }
-               System.out.println("--------------------------");
+
+                /*System.out.println("--------------------------");
                 for (int w = 0; w < solution.size();w++) {
                     System.out.println("\nNom del server:" + solution.get(w).getS().getId());
                     for (int t = 0; t < solution.get(w).getUsers().size(); t++) {
@@ -33,8 +45,11 @@ public class Backtracking {
                 }
                 System.out.println("Minim:" + minim);
                 System.out.println("Maxim:" + maxim);
+                maxActivityBest = maxim;
+                minActivityBest = minim;
+                maxDistance = calculDiferencial(possibleSolucio);
                 best = posibleBest;
-                //System.out.println("Best:" + best);
+                //System.out.println("Best:" + best);*/
                 return best;
             }
             else {
@@ -44,8 +59,9 @@ public class Backtracking {
         else {
             int y;
             for (int j = 0; j < servers.length;j++) {
-                int minim = obtindreMinimArray(possibleSolucio, servers.length);
+                int minim = obtindreMinimArray(possibleSolucio, servers.length,false);
                 int maxim =  obtindreMaximArray(possibleSolucio);
+                if (!(maxim > maxActivityBest && minim < minActivityBest && calculDiferencial(possibleSolucio) > maxDistance)) {
                     y = serverEncontrado(possibleSolucio, servers[j].getId());
                     Solution s;
                     if (y != -1) {
@@ -70,6 +86,10 @@ public class Backtracking {
                         possibleSolucio.get(y).getUsers().remove(possibleSolucio.get(y).getUsers().size()-1);
                     }
                 }
+                else {
+                    return best;
+                }
+            }
         }
         return best;
     }
@@ -103,10 +123,10 @@ public class Backtracking {
         }
         return maxim;
     }
-    private int obtindreMinimArray (List <Solution> s, int numServers) {
+    private int obtindreMinimArray (List <Solution> s, int numServers, boolean finalArr) {
         int minim = Integer.MAX_VALUE;
         int i = 0;
-        if(s.size() == numServers) {
+        if(!(finalArr && (numServers != s.size()))) {
             while (i < s.size()) {
                 if (s.get(i).sumaActivities < minim) {
                     minim = s.get(i).sumaActivities;

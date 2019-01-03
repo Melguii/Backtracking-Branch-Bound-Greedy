@@ -6,7 +6,7 @@ import JSONClasses.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Solution {
+public class Solution implements Cloneable{
     Server s;
     List <User> users;
     double carrega;
@@ -54,7 +54,6 @@ public class Solution {
         System.out.println(s.getCountry());
         System.out.println(u.calculHaversine(s.getLocation()));
         System.out.println(Math.pow(u.calculHaversine(s.getLocation()),u.getActivity()));*/
-        //TODO ELS HAVERSINE SON MES PODEROSOS QUE L'ACTIVITAT
         sumaActivities = sumaActivities + u.getActivity();
         carrega = carrega + u.calculHaversine(s.getLocation());//Math.pow(u.calculHaversine(s.getLocation()),u.getActivity());
     }
@@ -69,5 +68,9 @@ public class Solution {
 
     public void setSumaActivities(int sumaActivities) {
         this.sumaActivities = sumaActivities;
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

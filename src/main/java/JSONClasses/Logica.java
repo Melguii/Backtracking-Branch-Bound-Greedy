@@ -1,11 +1,12 @@
 package JSONClasses;
 
 import AlgorismesDistribucioCarrega.Backtracking;
-import Sorts.MergeSort;
+import AlgorismesDistribucioCarrega.Greedy;
 import com.google.gson.Gson;
 
 import Comparators.Comparator;
 import Comparators.CompareID;
+import Sorts.MergeSort;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -18,6 +19,7 @@ public class Logica {
     Node [] nodes;
     Server [] servers;
     List<Post> posts;
+    List<Server> solution =  new ArrayList <Server>();
 
     //Constructor de Logica (la classe actua)
     public Logica () {
@@ -58,26 +60,24 @@ public class Logica {
      * @param opcio
      */
     public void execucioMenuModeDisponibilitat (int opcio) {
+        solution.clear();
+
         switch (opcio) {
             case 1:
                 Backtracking b = new Backtracking();
                 List <Server> possibleSolucio = new ArrayList<Server>();
-                List<Server> solution =  new ArrayList <Server>();
-                double hola = b.backtringDistribucioCarrega(servers,0, Double.MAX_VALUE, possibleSolucio, solution, users);
-                System.out.println(solution.size());
-                for (int w = 0; w < solution.size();w++) {
-                    System.out.println("\nNom del server:" + solution.get(w).getId());
-                    for (int t = 0; t < solution.get(w).getUsers().size(); t++) {
-                        System.out.println("User:" + solution.get(w).getUsers().get(t).getUsername());
-                    }
-                }
-                int hola2 = 0;
-                System.out.println("\n");
+                b.backtringDistribucioCarrega(servers,0, Double.MAX_VALUE, possibleSolucio, solution, users);
                 break;
+
             case 2:
+
                 break;
+
             case 3:
+                Greedy g = new Greedy();
+                solution = g.greedyDistribucioCarrega(servers, users, 999999999);
                 break;
+
             case 4:
                 break;
             case 5:
@@ -85,6 +85,15 @@ public class Logica {
             default:
                 System.out.println("Error opcio introduida no valida");
         }
+
+        for (int w = 0; w < solution.size(); w++) {
+            System.out.println("\nNom del server:" + solution.get(w).getId());
+
+            for (int t = 0; t < solution.get(w).getUsers().size(); t++) {
+                System.out.println("User:" + solution.get(w).getUsers().get(t).getUsername());
+            }
+        }
+        System.out.println("\n");
     }
     /**
      * S'ocupa de llegir tots els fitxers que introdueix l'usuari o es fiquen per defecte, a la mateixa vegada que comprova la seva existencia i va emplenant els atributs de la classe

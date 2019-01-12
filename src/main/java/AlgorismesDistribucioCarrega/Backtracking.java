@@ -2,7 +2,7 @@ package AlgorismesDistribucioCarrega;
 
 import JSONClasses.Server;
 import JSONClasses.User;
-import org.apache.commons.beanutils.BeanUtils;
+//import org.apache.commons.beanutils.BeanUtils;
 
 
 import java.lang.reflect.InvocationTargetException;
@@ -28,6 +28,7 @@ public class Backtracking {
             int minim = obtindreMinimArray(possibleSolucio, servers.length,true);
             int maxim = obtindreMaximArray(possibleSolucio);
             double posibleBest = Math.pow (1.05,(maxim - minim)) * calculDiferencial(possibleSolucio);
+
             if (posibleBest < best) {
                 //Borrem tots els elements afegits anteriorment, ja que ara seran substituits
                 solution.clear();
@@ -38,24 +39,29 @@ public class Backtracking {
                 best = posibleBest;
                 //System.out.println("Best:" + best);
                 return best;
-            }
-            else {
+
+            } else {
                 return best;
+
             }
         }
         else {
             int y;
+
             for (int j = 0; j < servers.length;j++) {
                 int minim = obtindreMinimArray(possibleSolucio, servers.length,false);
                 int maxim =  obtindreMaximArray(possibleSolucio);
+
                 if (!(maxim > maxActivityBest && minim < minActivityBest && calculDiferencial(possibleSolucio) > maxDistance)) {
                     y = serverEncontrado(possibleSolucio, servers[j].getId());
                     Server s;
+
                     if (y != -1) {
                         s = possibleSolucio.get(y);
                         s.getUsers().add(users[posicio]);
                         s.sumarCarrega(users[posicio]);
                         possibleSolucio.set(y,s);
+
                     } else {
                         s = new Server();
                         s.setId(servers[j].getId());
@@ -67,24 +73,28 @@ public class Backtracking {
                         s.sumarCarrega(users[posicio]);
                         possibleSolucio.add(s);
                     }
+
                     int seguent = posicio + 1;
+
                     best = backtringDistribucioCarrega(servers, seguent, best, possibleSolucio, solution, users);
+
                     if (y == -1) {
                         possibleSolucio.remove(possibleSolucio.size() - 1);
-                    }
-                    else {
+
+                    } else {
                         possibleSolucio.get(y).restarCarrega(possibleSolucio.get(y).getUsers().get(possibleSolucio.get(y).getUsers().size()-1));
                         possibleSolucio.get(y).getUsers().remove(possibleSolucio.get(y).getUsers().size()-1);
+
                     }
-                }
-                else {
+                } else {
                     return best;
+
                 }
             }
         }
         return best;
     }
-    private int serverEncontrado (List<Server>s, int idBuscat) {
+    private int serverEncontrado (List<Server> s, int idBuscat) {
         int position = 0;
         while (position < s.size()) {
             if(s.get(position).getId() == idBuscat) {
@@ -103,9 +113,12 @@ public class Backtracking {
         }
         return resultat;
     }
+
+
     private int obtindreMaximArray (List <Server> s) {
         int maxim = 0;
         int i = 0;
+
         while (i < s.size()) {
             if (s.get(i).getSumaActivities() > maxim) {
                 maxim = s.get(i).getSumaActivities();
@@ -117,6 +130,7 @@ public class Backtracking {
     private int obtindreMinimArray (List <Server> s, int numServers, boolean finalArr) {
         int minim = Integer.MAX_VALUE;
         int i = 0;
+
         if(!(finalArr && (numServers != s.size()))) {
             while (i < s.size()) {
                 if (s.get(i).getSumaActivities() < minim) {
@@ -124,10 +138,11 @@ public class Backtracking {
                 }
                 i++;
             }
+
             return minim;
-        }
-        else {
+        } else {
             return 0;
+
         }
     }
     private void clonar (List<Server> solution, List <Server> possibleSolucio) {
@@ -138,10 +153,12 @@ public class Backtracking {
             s.setLocation(possibleSolucio.get(w).getLocation());
             s.setReachable_from(possibleSolucio.get(w).getReachable_from());
             s.setNodesDisponibles(possibleSolucio.get(w).getNodesDisponibles());
+
             for (int j = 0;j < possibleSolucio.get(w).getUsers().size();j++) {
                 User u =  new User();
                 s.getUsers().add(u);
             }
+
             for (int j = 0;j < possibleSolucio.get(w).getUsers().size();j++) {
                 try {
                     s.getUsers().set(j,(User)possibleSolucio.get(w).getUsers().get(j).clone());
@@ -149,6 +166,7 @@ public class Backtracking {
                     e.printStackTrace();
                 }
             }
+
             s.setCarrega(possibleSolucio.get(w).getCarrega());
             s.setSumaActivities(possibleSolucio.get(w).getSumaActivities());
             solution.add(s);

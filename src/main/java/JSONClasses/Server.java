@@ -83,30 +83,60 @@ public class Server implements Cloneable {
             i++;
         }
     }
+
+    /**
+     *
+     * @return
+     */
     public List<Node> getNodesDisponibles() {
         return nodesDisponibles;
     }
 
+    /**
+     *
+     * @param nodesDisponibles
+     */
     public void setNodesDisponibles(List<Node> nodesDisponibles) {
         this.nodesDisponibles = nodesDisponibles;
     }
 
+    /**
+     *
+     * @return
+     * @throws CloneNotSupportedException
+     */
     public Object clone () throws CloneNotSupportedException {
         return super.clone();
     }
 
+    /**
+     *
+     * @return
+     */
     public List<User> getUsers() {
         return users;
     }
 
+    /**
+     *
+     * @param users
+     */
     public void setUsers(List<User> users) {
         this.users = users;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getCarrega() {
         return carrega;
     }
 
+    /**
+     *
+     * @param carrega
+     */
     public void setCarrega(double carrega) {
         this.carrega = carrega;
     }
@@ -126,15 +156,28 @@ public class Server implements Cloneable {
         sumaActivities = sumaActivities + u.getActivity();
         carrega = carrega + u.calculHaversine(this.location);//Math.pow(u.calculHaversine(s.getLocation()),u.getActivity());
     }
+
+    /**
+     *
+     * @param u
+     */
     public void restarCarrega (User u) {
         carrega = carrega -   u.calculHaversine(this.location);//Math.pow(u.calculHaversine(s.getLocation()),u.getActivity());
         sumaActivities = sumaActivities - u.getActivity();
     }
 
+    /**
+     *
+     * @return
+     */
     public int getSumaActivities() {
         return sumaActivities;
     }
 
+    /**
+     *
+     * @param sumaActivities
+     */
     public void setSumaActivities(int sumaActivities) {
         this.sumaActivities = sumaActivities;
     }

@@ -150,6 +150,7 @@ public class User implements Cloneable{
     public void setActivity(int activity) {
         this.activity = activity;
     }
+
     public void calcularLocalitzacioUsuari () {
         location.add(posts.get(posts.size() - 1).getLocation().get(0));
         location.add(posts.get(posts.size() - 1).getLocation().get(1));

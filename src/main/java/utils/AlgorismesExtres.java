@@ -91,16 +91,16 @@ public class AlgorismesExtres {
         return resultat;
     }
 
-    public Server setInformation(Server[] servers, int idServerTrobat, User[] candidates, int userActual){
+    public Server setInformation( Server ServerTrobat, User userActual){
         Server s = new Server();
 
-        s.setId(servers[idServerTrobat].getId());
-        s.setCountry(servers[idServerTrobat].getCountry());
-        s.setLocation(servers[idServerTrobat].getLocation());
-        s.setReachable_from(servers[idServerTrobat].getReachable_from());
-        s.setNodesDisponibles(servers[idServerTrobat].getNodesDisponibles());
-        s.getUsers().add(candidates[userActual]);
-        s.sumarCarrega(candidates[userActual]);
+        s.setId(ServerTrobat.getId());
+        s.setCountry(ServerTrobat.getCountry());
+        s.setLocation(ServerTrobat.getLocation());
+        s.setReachable_from(ServerTrobat.getReachable_from());
+        s.setNodesDisponibles(ServerTrobat.getNodesDisponibles());
+        s.getUsers().add(userActual);
+        s.sumarCarrega(userActual);
 
         return s;
     }

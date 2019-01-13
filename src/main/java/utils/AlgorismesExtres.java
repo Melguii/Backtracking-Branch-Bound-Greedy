@@ -142,22 +142,42 @@ public class AlgorismesExtres {
         return s;
     }
 
-    public Node whichCostIsFeaseble(Node n, ArrayList<Node> path){
-        int cost;
+    public Node whichCostIsFeaseble(Node n, ArrayList<Node> path, double [] fiabilitat){
         int costId;
+        double possibleCost;
+        double bestCost = 0;
+        Node nodeSolucio = new Node();
+        for (int i = 0; i < n.getConnectsTo().size(); i++){
+            possibleCost = n.getConnectsTo().get(i).getNode().getReliability();
+            costId = n.getConnectsTo().get(i).getTo();
+
+            if (possibleCost > bestCost && (nodeEncontrado(path, costId) == -1)){
+                bestCost = possibleCost;
+                nodeSolucio = n.getConnectsTo().get(i).getNode();
+                fiabilitat[0] = fiabilitat[0] * possibleCost;
+            }
+        }
+        fiabilitat[0] = bestCost;
+        return  nodeSolucio;
+    }
+
+    public Node whichCostIsFeasebleEnMinim(Node n, ArrayList<Node> path, int [] cost){
+        int costId;
+        int possibleCost;
         int bestCost = Integer.MAX_VALUE;
         Node nodeSolucio = new Node();
         for (int i = 0; i < n.getConnectsTo().size(); i++){
-            cost = n.getConnectsTo().get(i).getCost();
+            possibleCost = n.getConnectsTo().get(i).getCost();
             costId = n.getConnectsTo().get(i).getTo();
 
-            if (cost < bestCost && (nodeEncontrado(path, costId) == -1)){
-                bestCost = n.getConnectsTo().get(i).getCost();
+            if (possibleCost < bestCost && (nodeEncontrado(path, costId) == -1)){
+                bestCost = possibleCost;
                 nodeSolucio = n.getConnectsTo().get(i).getNode();
+                cost[0] = possibleCost + cost[0];
             }
         }
 
-        return nodeSolucio;
+        return  nodeSolucio;
     }
 
     public int addInformationSolution (Server s, List <Server> solution, User c) {

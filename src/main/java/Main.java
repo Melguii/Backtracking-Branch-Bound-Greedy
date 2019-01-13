@@ -16,11 +16,14 @@ public class Main {
         List<Server> solucio;
         solucio = logica.execucioMenuModeCarrega (menu.getOpcioMenuDistribucioCarrega());
 
-        //Demanem a l'usuari que introdueixi el metode que vol utilitzar per calcular el cami més fiable i el més curt per anar d'un node al altre
-        menu.seleccioMenuMode("Disponibilitat (cami entre dos usuaris)");
-        menu.seleccioUsuari("Quin usuari ets?",logica);
-        menu.seleccioUsuari("A qui vols stalkejar?",logica);
-        logica.execucioMenuModeDisponibilitat (menu.getOpcioMenuDisponibilitat(), menu.getUserEmisor(), menu.getUserReceptor(), solucio);
+        if (solucio.size() != 0 ) {
+
+            //Demanem a l'usuari que introdueixi el metode que vol utilitzar per calcular el cami més fiable i el més curt per anar d'un node al altre
+            menu.seleccioMenuMode("Disponibilitat (cami entre dos usuaris)");
+            menu.seleccioUsuari("Quin usuari ets?", logica);
+            menu.seleccioUsuari("A qui vols stalkejar?", logica);
+            logica.execucioMenuModeDisponibilitat(menu.getOpcioMenuDisponibilitat(), menu.getUserEmisor(), menu.getUserReceptor(), solucio);
+        }
 
 
     }

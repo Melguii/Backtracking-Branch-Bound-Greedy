@@ -79,6 +79,7 @@ public class Logica {
         Greedy g = new Greedy();
         AlgorismesExtres ExtraAlgorithms = new AlgorismesExtres();
 
+
         switch (opcio) {
             case 1:
                 b.backtringDistribucioCarrega(servers,0, Double.MAX_VALUE, possibleSolucio, solution, users);
@@ -92,11 +93,15 @@ public class Logica {
                 break;
 
             case 3:
-                solution = g.greedyDistribucioCarrega(servers, users, 999999999);
+                System.out.println("Intorudeix-me la maxima diferencia d'activitat entre els servers:");
+                int tolerancia;
+                Scanner sc = new Scanner(System.in);
+                tolerancia = sc.nextInt();
+                solution = g.greedyDistribucioCarrega(servers, users, tolerancia);
                 break;
 
             case 4:
-                solution = g.greedyDistribucioCarrega(servers, users, 999999999);
+                solution = g.greedyDistribucioCarrega(servers, users, Integer.MAX_VALUE);
 
                 maxim = ExtraAlgorithms.obtindreMaximArray(solution);
                 minim = ExtraAlgorithms.obtindreMinimArray(solution, servers.length ,true);
@@ -136,16 +141,18 @@ public class Logica {
         Greedy g = new Greedy();
         Server serverEmisor = ExtraAlgorithms.getServerUsuari(solution, userEmisor.getUsername() );;
         Server serverReceptor = ExtraAlgorithms.getServerUsuari(solution, userReceptor.getUsername());;
-
+        int millor = Integer.MAX_VALUE;
+        double millorFiable = 0;
         int pathNumber = 0;
-
+        Backtracking b =  new Backtracking();
+        int best = Integer.MAX_VALUE;
+        double bestFiabilitat = Double.MAX_VALUE;
+        List <Node> possibleSolucio = new ArrayList<Node>();
+        List <Node> solutioFiabilitat = new ArrayList <Node>();
+        List <Node> nodes_start  = busquedaUser (userEmisor,distribucions);
+        List <Node> nodes_end = busquedaUser (userReceptor,distribucions);
         switch (opcio) {
             case 1:
-                Backtracking b =  new Backtracking();
-                double best = Double.MAX_VALUE;
-                List <Node> possibleSolucio = new ArrayList<Node>();
-                List <Node> nodes_start  = busquedaUser (userEmisor,distribucions);
-                List <Node> nodes_end = busquedaUser (userReceptor,distribucions);
                 for (int i = 0; i < nodes_start.size(); i++) {
                     for(int j = 0; j <nodes_end.size(); j++) {
                         possibleSolucio.add (nodes_start.get(i));
@@ -153,7 +160,14 @@ public class Logica {
                         possibleSolucio.clear();
                     }
                 }
-
+                bestFiabilitat = 0.0;
+                for (int i = 0; i < nodes_start.size(); i++) {
+                    for(int j = 0; j <nodes_end.size(); j++) {
+                        possibleSolucio.add (nodes_start.get(i));
+                        bestFiabilitat = b.backTrackingFiabilitat(nodes, nodes_start.get(i), bestFiabilitat, possibleSolucio, solutioFiabilitat, 1, nodes_end.get(j));
+                        possibleSolucio.clear();
+                    }
+                }
                 break;
 
             case 2:
@@ -161,31 +175,111 @@ public class Logica {
                 break;
 
             case 3:
-                ArrayList<ArrayList<Node>> auxPath = new ArrayList<ArrayList<Node>>();
                 while ( pathNumber < serverEmisor.getNodesDisponibles().size()){
-                    auxPath.add(g.greedyCamiMinim(serverEmisor, serverReceptor, nodes, serverEmisor.getNodesDisponibles().get(pathNumber)));
-
+                    ArrayList <Node> resolucio = new ArrayList<Node>();
+                    int possibleBest = g.greedyCamiMinim(serverEmisor, serverReceptor, nodes, serverEmisor.getNodesDisponibles().get(pathNumber), resolucio);
+                    if (possibleBest < millor) {
+                        solutio.clear();
+                        for(int s = 0; s < resolucio.size(); s++) {
+                            solutio.add(resolucio.get(s));
+                        }
+                        millor =  possibleBest;
+                    }
                     //solutionCamiFiable.add(g.greedyCamiFiable(solution, serverEmisor, serverReceptor, nodes));
                     pathNumber++;
                 }
+                if (solutio.size() == 0) {
+                    System.out.println("En aquest cas concret, el Greedy no pot donar una solucio de cami mes curt valida, degut a que s'arriba a un punt on s'ha d'anar a nodes ja recorreguts i per tant es queda encallat");
+                }
+                millor = 0;
+                pathNumber = 0;
+                while ( pathNumber < serverEmisor.getNodesDisponibles().size()){
+                    ArrayList <Node> resolucioFiabilitat = new ArrayList<Node>();
+                    double possibleBestFiable = g.greedyFiabilitat(serverEmisor, serverReceptor, nodes, serverEmisor.getNodesDisponibles().get(pathNumber), resolucioFiabilitat);
+                    if (possibleBestFiable > millorFiable) {
+                        solutioFiabilitat.clear();
+                        for(int s = 0; s < resolucioFiabilitat.size(); s++) {
+                            solutioFiabilitat.add(resolucioFiabilitat.get(s));
+                        }
+                        millorFiable =  possibleBestFiable;
+                    }
+                    //solutionCamiFiable.add(g.greedyCamiFiable(solution, serverEmisor, serverReceptor, nodes));
+                    pathNumber++;
+                }
+                if (solutioFiabilitat.size() == 0) {
+                    System.out.println("En aquest cas concret, el Greedy no pot donar una solucio de cami mes fiable valida, degut a que s'arriba a un punt on s'ha d'anar a nodes ja recorreguts i per tant es queda encallat");
+                }
+
                 break;
 
             case 4:
+                millor = Integer.MAX_VALUE;
+                while ( pathNumber < serverEmisor.getNodesDisponibles().size()){
+                    ArrayList <Node> resolucio = new ArrayList<Node>();
+                    int possibleBest = g.greedyCamiMinim(serverEmisor, serverReceptor, nodes, serverEmisor.getNodesDisponibles().get(pathNumber), resolucio);
+                    if (possibleBest < millor) {
+                        solutio.clear();
+                        for(int s = 0; s < resolucio.size(); s++) {
+                            solutio.add(resolucio.get(s));
+                        }
+                        millor =  possibleBest;
+                    }
+                    //solutionCamiFiable.add(g.greedyCamiFiable(solution, serverEmisor, serverReceptor, nodes));
+                    pathNumber++;
+                }
+                b =  new Backtracking();
+                best = millor;
+                possibleSolucio = new ArrayList<Node>();
+                nodes_start  = busquedaUser (userEmisor,distribucions);
+                nodes_end = busquedaUser (userReceptor,distribucions);
+                for (int i = 0; i < nodes_start.size(); i++) {
+                    for(int j = 0; j < nodes_end.size(); j++) {
+                        possibleSolucio.add (nodes_start.get(i));
+                        best = b.backTrackingCamiCurt(nodes, nodes_start.get(i), best, possibleSolucio, solutio, 0, nodes_end.get(j));
+                        possibleSolucio.clear();
+                    }
+                }
+                pathNumber = 0;
+                while ( pathNumber < serverEmisor.getNodesDisponibles().size()){
+                    ArrayList <Node> resolucioFiabilitat = new ArrayList<Node>();
+                    double possibleBestFiable = g.greedyFiabilitat(serverEmisor, serverReceptor, nodes, serverEmisor.getNodesDisponibles().get(pathNumber), resolucioFiabilitat);
+                    if (possibleBestFiable > millorFiable) {
+                        solutioFiabilitat.clear();
+                        for(int s = 0; s < resolucioFiabilitat.size(); s++) {
+                            solutioFiabilitat.add(resolucioFiabilitat.get(s));
+                        }
+                        millorFiable =  possibleBestFiable;
+                    }
+                    //solutionCamiFiable.add(g.greedyCamiFiable(solution, serverEmisor, serverReceptor, nodes));
+                    pathNumber++;
+                }
+                for (int i = 0; i < nodes_start.size(); i++) {
+                    for(int j = 0; j <nodes_end.size(); j++) {
+                        possibleSolucio.add (nodes_start.get(i));
+                        millorFiable = b.backTrackingFiabilitat(nodes, nodes_start.get(i), millorFiable, possibleSolucio, solutioFiabilitat, 1, nodes_end.get(j));
+                        possibleSolucio.clear();
+                    }
+                }
                 break;
             case 5:
                 break;
             default:
                 System.out.println("Error opcio introduida no valida");
         }
-        System.out.println("\n");
+        System.out.println("\nCami mes curt:");
         for (int w = 0; w < solutio.size(); w++) {
             System.out.print(solutio.get(w).getId());
             if (w != (solutio.size() -1)) {
                 System.out.print("-->");
             }
-            System.out.println("\n-----------------------------");
         }
-
+        System.out.println("\nCami mes fiable");
+        for (int w = 0; w < solutioFiabilitat.size(); w++) {
+            System.out.print(solutioFiabilitat.get(w).getId());
+            if (w != (solutioFiabilitat.size() -1)) {
+                System.out.print("-->");
+            }
+        }
             /*
         for (int w = 0; w < solutionCamiFiable.size(); w++) {
             System.out.println("\nNom del server:" + solutionCamiMinim.get(w).getId());

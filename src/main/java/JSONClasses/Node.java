@@ -6,7 +6,7 @@ import Busqueda.BusquedaBinaria;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Node {
+public class Node implements Cloneable{
 
     private int id;
     private double reliability;
@@ -61,6 +61,9 @@ public class Node {
                 connectsTo.get(j).setNode(nodes[posicio]);
             }
         }
+    }
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
 }

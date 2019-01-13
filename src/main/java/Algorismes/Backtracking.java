@@ -147,7 +147,7 @@ public class Backtracking {
         }
     }
 
-    public double backTrackingCamiCurt(Node [] nodes, Node nodeActual, double best, List <Node> possibleSolucio, List <Node> solution, double distanciaRecorreguda, Node fi) {
+    public int backTrackingCamiCurt(Node [] nodes, Node nodeActual, int best, List <Node> possibleSolucio, List <Node> solution, int distanciaRecorreguda, Node fi) {
         AlgorismesExtres funcEx = new AlgorismesExtres ();
         boolean senseEscapatoria =  camiSenseEscapatoria(nodeActual, possibleSolucio);
         if (hemArribatFinal (nodeActual,fi) || (!hemArribatFinal(nodeActual,fi) && senseEscapatoria)){
@@ -167,6 +167,34 @@ public class Backtracking {
                     distanciaRecorreguda = distanciaRecorreguda + nodeActual.getConnectsTo().get(i).getCost();
                     best = backTrackingCamiCurt(nodes, nodeActual.getConnectsTo().get(i).getNode(), best, possibleSolucio, solution, distanciaRecorreguda,fi);
                     distanciaRecorreguda = distanciaRecorreguda - nodeActual.getConnectsTo().get(i).getCost();
+                    possibleSolucio.remove(possibleSolucio.size()-1);
+                }
+            }
+        }
+        return best;
+
+    }
+
+    public double backTrackingFiabilitat(Node [] nodes, Node nodeActual, double best, List <Node> possibleSolucio, List <Node> solution, double fiabilitat, Node fi) {
+        AlgorismesExtres funcEx = new AlgorismesExtres ();
+        boolean senseEscapatoria =  camiSenseEscapatoria(nodeActual, possibleSolucio);
+        if (hemArribatFinal (nodeActual,fi) || (!hemArribatFinal(nodeActual,fi) && senseEscapatoria)){
+            if (hemArribatFinal(nodeActual,fi)) {
+                if (fiabilitat > best) {
+                    best = fiabilitat;
+                    solution.clear();
+                    funcEx.clonarCami(solution, possibleSolucio);
+                }
+            }
+            return best;
+        }
+        else {
+            for (int i = 0; i < nodeActual.getConnectsTo().size(); i++) {
+                if (fiabilitat > best && noHemPassatPerNode (nodeActual.getConnectsTo().get(i).getNode(), possibleSolucio)) {
+                    possibleSolucio.add(nodeActual.getConnectsTo().get(i).getNode());
+                    fiabilitat = fiabilitat * nodeActual.getConnectsTo().get(i).getNode().getReliability();
+                    best = backTrackingFiabilitat(nodes, nodeActual.getConnectsTo().get(i).getNode(), best, possibleSolucio, solution, fiabilitat,fi);
+                    fiabilitat = fiabilitat / nodeActual.getConnectsTo().get(i).getNode().getReliability();
                     possibleSolucio.remove(possibleSolucio.size()-1);
                 }
             }

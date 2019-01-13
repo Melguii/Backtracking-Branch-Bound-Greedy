@@ -11,11 +11,14 @@ public class Main {
 
         //Demanem a l'usuari que introdueixi el metode que vol utilitzar per distribuir els diferents usuaris en diferents servers
         menu.seleccioMenuMode("Distribucio de carrega");
-        logica.execucioMenuModeDisponibilitat (menu.getOpcioMenuDistribucioCarrega());
+        logica.execucioMenuModeCarrega (menu.getOpcioMenuDistribucioCarrega());
 
         //Demanem a l'usuari que introdueixi el metode que vol utilitzar per calcular el cami més fiable i el més curt per anar d'un node al altre
         menu.seleccioMenuMode("Disponibilitat (cami entre dos usuaris)");
         System.out.println(menu.getOpcioMenuDisponibilitat());
+        menu.seleccioUsuari("Quin usuari ets?");
+        menu.seleccioUsuari("A qui vols stalkejar?");
+        logica.execucioMenuModeDisponibilitat (menu.getOpcioMenuDisponibilitat(), menu.getUserEmisor(), menu.getUserReceptor());
 
 
     }

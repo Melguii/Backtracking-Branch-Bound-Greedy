@@ -1,4 +1,4 @@
-package AlgorismesDistribucioCarrega;
+package AlgorismesBusquedaCamins;
 
 //import static java.sql.JDBCType.NULL;
 
@@ -16,10 +16,10 @@ public class Greedy {
      * @param servers: nodes on els usuaris són repartits
      * @param candidates: candidates
      */
-    public ArrayList <Server> greedyDistribucioCarrega(Server[] servers, User[] candidates, int tolerancia){
+    public List<Server> greedyDistribucioCarrega(Server[] servers, User[] candidates, int tolerancia){
         int idServerTrobat;
 
-        ArrayList <Server> solution = new ArrayList<Server>();
+        List<Server> solution = new ArrayList<Server>();
         AlgorismesExtres funcEx = new AlgorismesExtres();
         Server s = new Server();
 

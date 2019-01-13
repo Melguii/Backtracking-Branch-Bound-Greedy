@@ -11,30 +11,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BranchAndBound {
-    public List<Server> branchAndBoundDistribucioCarrega(Server [] servers, User[] users,ArrayList<Server> solucioDefinitiva, double best) {
-        ArrayList<Server> possibleSolucio = new ArrayList<Server>(); //Array on guardem la solucio que estava dalt de tot de livesNodes
-        ArrayList<ArrayList<Server>> lives_nodes = new ArrayList<ArrayList<Server>>(); //Array on guardem totes les possibles solucions ordenades
-        ArrayList <ArrayList <Server>> options = new ArrayList<ArrayList<Server>>(); //Array on guardem totes les possibles continuacions, per exemple si estem en l'usuari 1 --> El server 1,2,3,4,5...
+    public ArrayList <Server> branchAndBoundDistribucioCarrega(Server [] servers, User[] users, ArrayList<Server> solucioDefinitiva, double best) {
+        ArrayList<Server> possibleSolucio = new ArrayList<Server>();                                                    //Array on guardem la solucio que estava dalt de tot de livesNodes
+        ArrayList<ArrayList<Server>> lives_nodes = new ArrayList<ArrayList<Server>>();                                  //Array on guardem totes les possibles solucions ordenades
+        ArrayList <ArrayList <Server>> options = new ArrayList<ArrayList<Server>>();                                    //Array on guardem totes les possibles continuacions, per exemple si estem en l'usuari 1 --> El server 1,2,3,4,5...
         AlgorismesExtres ExtraAlgorithms = new AlgorismesExtres();
+
         Server serverPrimerUsuari = ExtraAlgorithms.whereIsFeaseble(servers, users[0], possibleSolucio, users);
         possibleSolucio.add(serverPrimerUsuari);
         ExtraAlgorithms.addInformationSolution(serverPrimerUsuari,possibleSolucio,users[0]);
+
         encuarSolucio (lives_nodes, possibleSolucio,servers.length);
         while (lives_nodes.size() != 0) {
             possibleSolucio = desencua (lives_nodes);
             expand (ExtraAlgorithms, options, possibleSolucio, servers, users);
+
             for (int j = 0; j < options.size(); j++) {
                 if (esSolucio (options.get(j), users.length)){
                     best = comprovacioActualitzacioBest(ExtraAlgorithms,best, options.get(j),servers.length,solucioDefinitiva);
-                }
-                else {
+                } else {
                     if (is_promising (options.get(j),best,servers.length,ExtraAlgorithms)) {
                         encuarSolucio (lives_nodes, options.get(j),servers.length);
+
                     }
                 }
             }
+
             options.clear();
         }
+
         return solucioDefinitiva;
     }
 

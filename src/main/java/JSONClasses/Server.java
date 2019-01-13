@@ -10,7 +10,7 @@ public class Server implements Cloneable {
 
     private int id;
     private String country;
-    private List<Double> location = null;                   //Falta parlar si farem una ArrayList o un Array fixe de 2 posicions
+    private List<Double> location = null;
     private int reachable_from [];
     private List <Node> nodesDisponibles;
     private List <User> users;

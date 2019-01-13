@@ -10,6 +10,8 @@ public class Menu {
     private int opcioMenuFitxers;
     private int opcioMenuDisponibilitat;
     private int opcioMenuDistribucioCarrega;
+    private User UserEmisor;
+    private User UserReceptor;
 
     /**
      * Mostrem a l'usuari les diferentes opcions del menu de fitxers(que et pregunta sobre quin son els fitxers que vols utilitzar)
@@ -143,6 +145,37 @@ public class Menu {
         }
     }
 
+    public void seleccioUsuari(String texto){
+        String userName;
+        boolean userTrobat = false;
+
+        User user = new User();
+        Logica l = new Logica();
+
+        do {
+            mostarMenuModes(texto);
+
+            //El usuari introdueix l'opcio desitjada
+            Scanner sc = new Scanner (System.in);
+            userName = sc.nextLine();
+
+            if (userName.equals(l.cercaUser(userName).getUsername())){
+                userTrobat = true;
+                user = l.cercaUser(userName);
+            }
+
+            //Repetirem el proces fins que s'introdueixi una opcio correcta
+        } while(!userTrobat);
+
+        //Retornem la opcio correcta introduida per l'usuari
+        if (texto == "Quin usuari ets?") {
+            UserEmisor = user;
+        }
+        else {
+            UserReceptor = user;
+        }
+    }
+
     /**
      * Mostra el menu amb tots els modes possibles
      * @param texto Text que indica a l'usuari el que se li ho està demanant
@@ -177,5 +210,21 @@ public class Menu {
 
     public void setOpcioMenuDistribucioCarrega(int opcioMenuDistribucioCarrega) {
         this.opcioMenuDistribucioCarrega = opcioMenuDistribucioCarrega;
+    }
+
+    public User getUserEmisor() {
+        return UserEmisor;
+    }
+
+    public void setUserEmisor(User userEmisor) {
+        UserEmisor = userEmisor;
+    }
+
+    public User getUserReceptor() {
+        return UserReceptor;
+    }
+
+    public void setUserReceptor(User userReceptor) {
+        UserReceptor = userReceptor;
     }
 }

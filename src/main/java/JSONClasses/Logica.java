@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import Comparators.Comparator;
 import Comparators.CompareID;
 import Sorts.MergeSort;
+import utils.AlgorismesExtres;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -23,7 +24,7 @@ public class Logica {
     private Node [] nodes;
     private Server [] servers;
     private List<Post> posts;
-    private List<Server> solution =  new ArrayList <Server>();
+    private ArrayList <Server> solution =  new ArrayList <Server>();
 
     //Constructor de Logica (la classe actua)
     public Logica () {
@@ -63,13 +64,21 @@ public class Logica {
      *
      * @param opcio
      */
-    public void execucioMenuModeDisponibilitat (int opcio) {
+    public void execucioMenuModeCarrega(int opcio) {
         solution.clear();
+        Backtracking b = new Backtracking();
+        List <Server> possibleSolucio = new ArrayList<Server>();
+        BranchAndBound boo = new BranchAndBound();
+        ArrayList<Server> solucioDefinitiva = new ArrayList<Server>(); //Array on guardem la distribucio de la millor solucio obtinguda
+        double best; //Cost de la millor solucio obtinguda
+        int maxim = 0;
+        int minim = 0;
+        best = Double.MAX_VALUE;
+        Greedy g = new Greedy();
+        AlgorismesExtres ExtraAlgorithms = new AlgorismesExtres();
 
         switch (opcio) {
             case 1:
-                Backtracking b = new Backtracking();
-                List <Server> possibleSolucio = new ArrayList<Server>();
                 b.backtringDistribucioCarrega(servers,0, Double.MAX_VALUE, possibleSolucio, solution, users);
                 break;
 
@@ -77,16 +86,59 @@ public class Logica {
                 QuickSortUsers qUsers = new QuickSortUsers();
                 ComparatorUser c = new ComparatorUserCharge();
                 qUsers.quickSort(users,c,0,users.length-1);
-                BranchAndBound boo = new BranchAndBound();
-                ArrayList<Server> solucioDefinitiva = new ArrayList<Server>(); //Array on guardem la distribucio de la millor solucio obtinguda
-                double best; //Cost de la millor solucio obtinguda
-                best = Double.MAX_VALUE;
                 solution = boo.branchAndBoundDistribucioCarrega(servers,users,solucioDefinitiva,best);
                 break;
 
             case 3:
-                Greedy g = new Greedy();
                 solution = g.greedyDistribucioCarrega(servers, users, 999999999);
+                break;
+
+            case 4:
+                solution = g.greedyDistribucioCarrega(servers, users, 999999999);
+
+                maxim = ExtraAlgorithms.obtindreMaximArray(solution);
+                minim = ExtraAlgorithms.obtindreMinimArray(solution, servers.length ,true);
+                best =  Math.pow (1.05, (maxim - minim)) * ExtraAlgorithms.calculDiferencial(solution);
+
+                b.backtringDistribucioCarrega(servers,0, best, possibleSolucio, solution, users);
+                break;
+
+            case 5:
+                solution = g.greedyDistribucioCarrega(servers, users, 999999999);
+
+                maxim = ExtraAlgorithms.obtindreMaximArray(solution);
+                minim = ExtraAlgorithms.obtindreMinimArray(solution, servers.length ,true);
+                best =  Math.pow (1.05, (maxim - minim)) * ExtraAlgorithms.calculDiferencial(solution);
+
+                solution = boo.branchAndBoundDistribucioCarrega(servers, users, solution, best);
+                break;
+
+            default:
+                System.out.println("Error opcio introduida no valida");
+        }
+
+        for (int w = 0; w < solution.size(); w++) {
+            System.out.println("\nNom del server:" + solution.get(w).getId());
+
+            for (int t = 0; t < solution.get(w).getUsers().size(); t++) {
+                System.out.println("User:" + solution.get(w).getUsers().get(t).getUsername());
+            }
+        }
+        System.out.println("\n");
+    }
+
+    public void execucioMenuModeDisponibilitat(int opcio, User userEmisor, User userReceptor){
+        switch (opcio) {
+            case 1:
+
+                break;
+
+            case 2:
+
+                break;
+
+            case 3:
+
                 break;
 
             case 4:
@@ -106,6 +158,19 @@ public class Logica {
         }
         System.out.println("\n");
     }
+
+    public User cercaUser(String userName){
+
+        for (int i = 0; i < users.length; i++){
+            if (userName == users[i].getUsername()){
+                return users[i];
+            }
+        }
+
+        System.out.println("Error, usuari no trobat");
+        return null;
+    }
+
     /**
      * S'ocupa de llegir tots els fitxers que introdueix l'usuari o es fiquen per defecte, a la mateixa vegada que comprova la seva existencia i va emplenant els atributs de la classe
      * @param nomFitxerUsers Nom que te el fitxer que conte els usuaris

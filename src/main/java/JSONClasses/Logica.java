@@ -3,6 +3,9 @@ package JSONClasses;
 import AlgorismesDistribucioCarrega.Backtracking;
 import AlgorismesDistribucioCarrega.BranchAndBound;
 import AlgorismesDistribucioCarrega.Greedy;
+import Comparators.ComparatorUser;
+import Comparators.ComparatorUserCharge;
+import Sorts.QuickSortUsers;
 import com.google.gson.Gson;
 
 import Comparators.Comparator;
@@ -16,11 +19,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Logica {
-    User [] users;
-    Node [] nodes;
-    Server [] servers;
-    List<Post> posts;
-    List<Server> solution =  new ArrayList <Server>();
+    private User [] users;
+    private Node [] nodes;
+    private Server [] servers;
+    private List<Post> posts;
+    private List<Server> solution =  new ArrayList <Server>();
 
     //Constructor de Logica (la classe actua)
     public Logica () {
@@ -71,6 +74,9 @@ public class Logica {
                 break;
 
             case 2:
+                QuickSortUsers qUsers = new QuickSortUsers();
+                ComparatorUser c = new ComparatorUserCharge();
+                qUsers.quickSort(users,c,0,users.length-1);
                 BranchAndBound boo = new BranchAndBound();
                 solution = boo.branchAndBoundDistribucioCarrega(servers,users);
                 break;

@@ -11,9 +11,9 @@ public class CompareDistribution implements ComparatorServerList{
         int maxim = ExtraAlgorithms.obtindreMaximArray(llista1);
         int minim = ExtraAlgorithms.obtindreMinimArray(llista1,numServers ,false);
         double resultat1 =  Math.pow (1.05, (maxim - minim)) * ExtraAlgorithms.calculDiferencial(llista1);
-        maxim = ExtraAlgorithms.obtindreMaximArray(llista1);
-        minim = ExtraAlgorithms.obtindreMinimArray(llista1,numServers ,false);
-        double resultat2 =  Math.pow (1.05, (maxim - minim)) * ExtraAlgorithms.calculDiferencial(llista1);
+        maxim = ExtraAlgorithms.obtindreMaximArray(llista2);
+        minim = ExtraAlgorithms.obtindreMinimArray(llista2,numServers ,false);
+        double resultat2 =  Math.pow (1.05, (maxim - minim)) * ExtraAlgorithms.calculDiferencial(llista2);
         if (resultat1 > resultat2) {
             return true;
         }
@@ -27,9 +27,9 @@ public class CompareDistribution implements ComparatorServerList{
         int maxim = ExtraAlgorithms.obtindreMaximArray(llista1);
         int minim = ExtraAlgorithms.obtindreMinimArray(llista1,numServers ,false);
         double resultat1 =  Math.pow (1.05, (maxim - minim)) * ExtraAlgorithms.calculDiferencial(llista1);
-        maxim = ExtraAlgorithms.obtindreMaximArray(llista1);
-        minim = ExtraAlgorithms.obtindreMinimArray(llista1,numServers ,false);
-        double resultat2 =  Math.pow (1.05, (maxim - minim)) * ExtraAlgorithms.calculDiferencial(llista1);
+        maxim = ExtraAlgorithms.obtindreMaximArray(llista2);
+        minim = ExtraAlgorithms.obtindreMinimArray(llista2,numServers ,false);
+        double resultat2 =  Math.pow (1.05, (maxim - minim)) * ExtraAlgorithms.calculDiferencial(llista2);
         if (resultat1 < resultat2) {
             return true;
         }
@@ -43,9 +43,9 @@ public class CompareDistribution implements ComparatorServerList{
         int maxim = ExtraAlgorithms.obtindreMaximArray(llista1);
         int minim = ExtraAlgorithms.obtindreMinimArray(llista1,numServers ,false);
         double resultat1 =  Math.pow (1.05, (maxim - minim)) * ExtraAlgorithms.calculDiferencial(llista1);
-        maxim = ExtraAlgorithms.obtindreMaximArray(llista1);
-        minim = ExtraAlgorithms.obtindreMinimArray(llista1,numServers ,false);
-        double resultat2 =  Math.pow (1.05, (maxim - minim)) * ExtraAlgorithms.calculDiferencial(llista1);
+        maxim = ExtraAlgorithms.obtindreMaximArray(llista2);
+        minim = ExtraAlgorithms.obtindreMinimArray(llista2,numServers ,false);
+        double resultat2 =  Math.pow (1.05, (maxim - minim)) * ExtraAlgorithms.calculDiferencial(llista2);
         if (resultat1 <= resultat2) {
             return true;
         }

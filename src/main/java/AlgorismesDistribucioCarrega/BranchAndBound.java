@@ -126,8 +126,9 @@ public class BranchAndBound {
     private void encuarSolucio (ArrayList<ArrayList<Server>> lives_nodes,ArrayList<Server> possibleSolucio, int numServers) {
         lives_nodes.add(possibleSolucio);
         QuickSort q = new QuickSort ();
+        AlgorismesExtres ExtraAlgorithms = new AlgorismesExtres();
         ComparatorServerList c = new CompareDistribution();
-        q.quickSort(lives_nodes,c,0,lives_nodes.size() -1,numServers);
+        q.quickSort(lives_nodes,c,0,lives_nodes.size()-1,numServers);
 
     }
 }

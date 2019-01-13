@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BranchAndBound {
-    public void branchAndBoundDistribucioCarrega(Server [] servers, User[] users) {
+    public List<Server> branchAndBoundDistribucioCarrega(Server [] servers, User[] users) {
         double best; //Cost de la millor solucio obtinguda
         ArrayList<Server> solucioDefinitiva = new ArrayList<Server>(); //Array on guardem la distribucio de la millor solucio obtinguda
         ArrayList<Server> possibleSolucio = new ArrayList<Server>(); //Array on guardem la solucio que estava dalt de tot de livesNodes
@@ -21,6 +21,7 @@ public class BranchAndBound {
         AlgorismesExtres ExtraAlgorithms = new AlgorismesExtres();
         Server serverPrimerUsuari = ExtraAlgorithms.whereIsFeaseble(servers, users[0], possibleSolucio, users);
         possibleSolucio.add(serverPrimerUsuari);
+        ExtraAlgorithms.addInformationSolution(serverPrimerUsuari,possibleSolucio,users[0]);
         encuarSolucio (lives_nodes, possibleSolucio,servers.length);
         while (lives_nodes.size() != 0) {
             possibleSolucio = desencua (lives_nodes);
@@ -35,9 +36,9 @@ public class BranchAndBound {
                     }
                 }
             }
-            //System.out.println("Hola");
+            options.clear();
         }
-
+        return solucioDefinitiva;
     }
 
     private boolean esSolucio (List <Server> possibleSolucio, int numUsers) {
@@ -64,7 +65,9 @@ public class BranchAndBound {
         u = buscarUsuariNoIntroduit(users,possibleSolucio);
         for (int i = 0; i < servers.length; i++) {
             idServerTrobat = ExtraAlgorithms.addInformationSolution(servers[i],possibleSolucio, u);
-            options.add(possibleSolucio);
+            ArrayList <Server> auxiliar = new ArrayList<Server>();
+            ExtraAlgorithms.clonar(auxiliar,possibleSolucio);
+            options.add(auxiliar);
             ExtraAlgorithms.removeInformation(possibleSolucio,idServerTrobat);
         }
     }
@@ -73,6 +76,7 @@ public class BranchAndBound {
         int minim = ExtraAlgorithms.obtindreMinimArray(possibleBest, numServers,true);
         double resultat =  Math.pow (1.05, (maxim - minim)) * ExtraAlgorithms.calculDiferencial(possibleBest);
         if(resultat < best) {
+            solucioDefinitiva.clear();
             ExtraAlgorithms.clonar (solucioDefinitiva, possibleBest);
             return resultat;
         }
@@ -111,7 +115,7 @@ public class BranchAndBound {
         while (!trobat && h < users.length) {
             trobat =  true;
             for (int w = 0; w < arrayUserAux.size(); w++) {
-                if (arrayUserAux.get(w) == users[h]) {
+                if (arrayUserAux.get(w).getUsername().equals(users[h].getUsername())) {
                     trobat = false;
                 }
             }

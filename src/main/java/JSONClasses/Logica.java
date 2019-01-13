@@ -72,7 +72,7 @@ public class Logica {
 
             case 2:
                 BranchAndBound boo = new BranchAndBound();
-                boo.branchAndBoundDistribucioCarrega(servers,users);
+                solution = boo.branchAndBoundDistribucioCarrega(servers,users);
                 break;
 
             case 3:

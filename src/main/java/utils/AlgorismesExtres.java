@@ -1,5 +1,6 @@
 package utils;
 
+import JSONClasses.Node;
 import JSONClasses.ConnectsTo;
 import JSONClasses.Node;
 import JSONClasses.Server;
@@ -69,7 +70,7 @@ public class AlgorismesExtres {
         }
     }
 
-    public int serverEncontrado (List<Server>s, int idBuscat) {
+    public int serverEncontrado (List<Server> s, int idBuscat) {
         int position = 0;
 
         while (position < s.size()) {
@@ -140,6 +141,25 @@ public class AlgorismesExtres {
 
         return s;
     }
+
+    public Node whichCostIsFeaseble(Node n, ArrayList<Node> path){
+        int cost;
+        int costId;
+        int bestCost = Integer.MAX_VALUE;
+        Node nodeSolucio = new Node();
+        for (int i = 0; i < n.getConnectsTo().size(); i++){
+            cost = n.getConnectsTo().get(i).getCost();
+            costId = n.getConnectsTo().get(i).getTo();
+
+            if (cost < bestCost && (nodeEncontrado(path, costId) == -1)){
+                bestCost = n.getConnectsTo().get(i).getCost();
+                nodeSolucio = n.getConnectsTo().get(i).getNode();
+            }
+        }
+
+        return nodeSolucio;
+    }
+
     public int addInformationSolution (Server s, List <Server> solution, User c) {
         int idServerTrobat;
         idServerTrobat = serverEncontrado(solution, s.getId());
@@ -157,6 +177,7 @@ public class AlgorismesExtres {
         }
         return idServerTrobat;
     }
+
     public void removeInformation (List <Server> solution, int idServerTrobat) {
         if (idServerTrobat == -1) {
             solution.remove(solution.size() - 1);
@@ -164,6 +185,44 @@ public class AlgorismesExtres {
             solution.get(idServerTrobat).restarCarrega(solution.get(idServerTrobat).getUsers().get(solution.get(idServerTrobat).getUsers().size() - 1));
             solution.get(idServerTrobat).getUsers().remove(solution.get(idServerTrobat).getUsers().size() - 1);
         }
+    }
+
+    public boolean serverTrobat(Node node, Server serverBuscat){
+
+        for (int i = 0; i < serverBuscat.getNodesDisponibles().size(); i++){
+            if (node.getId() == serverBuscat.getNodesDisponibles().get(i).getId()){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public int nodeEncontrado(List<Node> n, int idBuscat) {
+        int position = 0;
+
+        while (position < n.size()) {
+            if (n.get(position).getId() == idBuscat) {
+                return position;
+            }
+            position++;
+        }
+
+        return -1;
+    }
+
+    public Server getServerUsuari(List <Server> servers, String nameUser){
+        for (int i = 0; i < servers.size(); i++){
+            for (int j = 0; j < servers.get(i).getUsers().size(); j++){
+
+                if (nameUser.equals(servers.get(i).getUsers().get(j).getUsername())){
+
+                    return servers.get(i);
+                }
+            }
+        }
+
+        return null;
     }
     public void clonarCami (List <Node> solucio, List <Node> possibleSolucio) {
         for (int w = 0; w < possibleSolucio.size();w++) {

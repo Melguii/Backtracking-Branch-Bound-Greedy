@@ -153,21 +153,19 @@ public class Menu {
 
         do {
             System.out.println(texto);
-
             //El usuari introdueix l'opcio desitjada
             Scanner sc = new Scanner (System.in);
-            userName = sc.next();
+            userName = sc.nextLine();
 
             if (userName.equals(l.cercaUser(userName).getUsername())){
                 userTrobat = true;
                 user = l.cercaUser(userName);
             }
 
-            //Repetirem el proces fins que s'introdueixi una opcio correcta
-        } while(!userTrobat);
+        } while(!userTrobat);                                                                                           //Repetirem el proces fins que s'introdueixi una opcio correcta
 
         //Retornem la opcio correcta introduida per l'usuari
-        if (texto == "Quin usuari ets?") {
+        if (texto.equals("Quin usuari ets?")) {
             UserEmisor = user;
         }
         else {

@@ -1,4 +1,4 @@
-package AlgorismesDistribucioCarrega;
+package Algorismes;
 
 import JSONClasses.Node;
 import JSONClasses.Server;
@@ -7,11 +7,7 @@ import utils.AlgorismesExtres;
 //import org.apache.commons.beanutils.BeanUtils;
 
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public class Backtracking {

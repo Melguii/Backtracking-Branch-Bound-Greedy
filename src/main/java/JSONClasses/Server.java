@@ -22,7 +22,7 @@ public class Server implements Cloneable {
         this.country = country;
         this.location = location;
         this.reachable_from = reachable_from;
-        this.nodesDisponibles = new ArrayList <Node> ();
+        this.nodesDisponibles = new ArrayList <Node> ();                                                                //Nodes que es conecten directament al servidor
         this.users = new ArrayList<User>();
     }
 

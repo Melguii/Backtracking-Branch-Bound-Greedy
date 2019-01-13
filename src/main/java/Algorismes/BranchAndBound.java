@@ -1,4 +1,4 @@
-package AlgorismesDistribucioCarrega;
+package Algorismes;
 
 import Comparators.ComparatorServerList;
 import Comparators.CompareDistribution;
@@ -12,9 +12,9 @@ import java.util.List;
 
 public class BranchAndBound {
     public ArrayList <Server> branchAndBoundDistribucioCarrega(Server [] servers, User[] users, ArrayList<Server> solucioDefinitiva, double best) {
-        ArrayList<Server> possibleSolucio = new ArrayList<Server>();                                                    //Array on guardem la solucio que estava dalt de tot de livesNodes
+        ArrayList<Server> possibleSolucio = new ArrayList<Server>();                                                         //Array on guardem la solucio que estava dalt de tot de livesNodes
         ArrayList<ArrayList<Server>> lives_nodes = new ArrayList<ArrayList<Server>>();                                  //Array on guardem totes les possibles solucions ordenades
-        ArrayList <ArrayList <Server>> options = new ArrayList<ArrayList<Server>>();                                    //Array on guardem totes les possibles continuacions, per exemple si estem en l'usuari 1 --> El server 1,2,3,4,5...
+        ArrayList <ArrayList <Server>> options = new ArrayList<ArrayList<Server>>();                                                    //Array on guardem totes les possibles continuacions, per exemple si estem en l'usuari 1 --> El server 1,2,3,4,5...
         AlgorismesExtres ExtraAlgorithms = new AlgorismesExtres();
 
         Server serverPrimerUsuari = ExtraAlgorithms.whereIsFeaseble(servers, users[0], possibleSolucio, users);

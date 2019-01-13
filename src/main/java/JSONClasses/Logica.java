@@ -1,8 +1,8 @@
 package JSONClasses;
 
-import AlgorismesDistribucioCarrega.Backtracking;
-import AlgorismesDistribucioCarrega.BranchAndBound;
-import AlgorismesDistribucioCarrega.Greedy;
+import Algorismes.Backtracking;
+import Algorismes.BranchAndBound;
+import Algorismes.Greedy;
 import Comparators.ComparatorUser;
 import Comparators.ComparatorUserCharge;
 import Sorts.QuickSortUsers;
@@ -20,11 +20,13 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Logica {
-    private User [] users;
-    private Node [] nodes;
-    private Server [] servers;
-    private List<Post> posts;
-    private ArrayList <Server> solution =  new ArrayList <Server>();
+    private User []             users;
+    private Node []             nodes;
+    private Server []           servers;
+    private List<Post>          posts;
+    private ArrayList <Server>  solution             =  new ArrayList <Server>();
+    private ArrayList <ArrayList <Node>>  solutionCamiMinim    =  new ArrayList <ArrayList <Node>>();
+    private ArrayList <ArrayList <Node>>  solutionCamiFiable   =  new ArrayList <ArrayList <Node>>();
 
     //Constructor de Logica (la classe actua)
     public Logica () {
@@ -130,6 +132,13 @@ public class Logica {
 
     public void execucioMenuModeDisponibilitat(int opcio, User userEmisor, User userReceptor, List <Server> distribucions){
         List <Node> solutio = new ArrayList<Node>();
+        AlgorismesExtres ExtraAlgorithms = new AlgorismesExtres();
+        Greedy g = new Greedy();
+        Server serverEmisor = ExtraAlgorithms.getServerUsuari(solution, userEmisor.getUsername() );;
+        Server serverReceptor = ExtraAlgorithms.getServerUsuari(solution, userReceptor.getUsername());;
+
+        int pathNumber = 0;
+
         switch (opcio) {
             case 1:
                 Backtracking b =  new Backtracking();
@@ -152,7 +161,13 @@ public class Logica {
                 break;
 
             case 3:
+                ArrayList<ArrayList<Node>> auxPath = new ArrayList<ArrayList<Node>>();
+                while ( pathNumber < serverEmisor.getNodesDisponibles().size()){
+                    auxPath.add(g.greedyCamiMinim(serverEmisor, serverReceptor, nodes, serverEmisor.getNodesDisponibles().get(pathNumber)));
 
+                    //solutionCamiFiable.add(g.greedyCamiFiable(solution, serverEmisor, serverReceptor, nodes));
+                    pathNumber++;
+                }
                 break;
 
             case 4:
@@ -168,7 +183,13 @@ public class Logica {
             if (w != (solutio.size() -1)) {
                 System.out.print("-->");
             }
+            System.out.println("\n-----------------------------");
         }
+
+            /*
+        for (int w = 0; w < solutionCamiFiable.size(); w++) {
+            System.out.println("\nNom del server:" + solutionCamiMinim.get(w).getId());
+        }*/
         System.out.println("\n");
     }
 

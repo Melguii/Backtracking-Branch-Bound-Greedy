@@ -1,7 +1,6 @@
 import JSONClasses.Logica;
 import JSONClasses.Menu;
 import JSONClasses.Server;
-
 import java.util.List;
 
 public class Main {

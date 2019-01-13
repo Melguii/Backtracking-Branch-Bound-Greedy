@@ -1,8 +1,11 @@
 package utils;
 
+import JSONClasses.ConnectsTo;
+import JSONClasses.Node;
 import JSONClasses.Server;
 import JSONClasses.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AlgorismesExtres {
@@ -160,6 +163,27 @@ public class AlgorismesExtres {
         } else {
             solution.get(idServerTrobat).restarCarrega(solution.get(idServerTrobat).getUsers().get(solution.get(idServerTrobat).getUsers().size() - 1));
             solution.get(idServerTrobat).getUsers().remove(solution.get(idServerTrobat).getUsers().size() - 1);
+        }
+    }
+    public void clonarCami (List <Node> solucio, List <Node> possibleSolucio) {
+        for (int w = 0; w < possibleSolucio.size();w++) {
+            Node s = new Node ();
+            s.setId(possibleSolucio.get(w).getId());
+            s.setReliability(possibleSolucio.get(w).getReliability());
+            List <ConnectsTo> connectsToAux = new ArrayList<ConnectsTo>();
+            for (int j = 0; j < possibleSolucio.get(w).getConnectsTo().size(); j++) {
+                ConnectsTo c = new ConnectsTo();
+                connectsToAux.add(c);
+            }
+            for (int j = 0; j < possibleSolucio.get(w).getConnectsTo().size(); j++) {
+                try {
+                    connectsToAux.set(j,(ConnectsTo) possibleSolucio.get(w).getConnectsTo().get(j).clone());
+                } catch (CloneNotSupportedException e) {
+                    e.printStackTrace();
+                }
+            }
+            s.setConnectsTo(connectsToAux);
+            solucio.add(possibleSolucio.get(w));
         }
     }
 }

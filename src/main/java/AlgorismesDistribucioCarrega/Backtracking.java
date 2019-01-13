@@ -1,5 +1,6 @@
 package AlgorismesDistribucioCarrega;
 
+import JSONClasses.Node;
 import JSONClasses.Server;
 import JSONClasses.User;
 import utils.AlgorismesExtres;
@@ -150,4 +151,59 @@ public class Backtracking {
         }
     }
 
+    public double backTrackingCamiCurt(Node [] nodes, Node nodeActual, double best, List <Node> possibleSolucio, List <Node> solution, double distanciaRecorreguda, Node fi) {
+        AlgorismesExtres funcEx = new AlgorismesExtres ();
+        boolean senseEscapatoria =  camiSenseEscapatoria(nodeActual, possibleSolucio);
+        if (hemArribatFinal (nodeActual,fi) || (!hemArribatFinal(nodeActual,fi) && senseEscapatoria)){
+            if (hemArribatFinal(nodeActual,fi)) {
+                if (distanciaRecorreguda < best) {
+                    best = distanciaRecorreguda;
+                    solution.clear();
+                    funcEx.clonarCami(solution, possibleSolucio);
+                }
+            }
+            return best;
+        }
+        else {
+            for (int i = 0; i < nodeActual.getConnectsTo().size(); i++) {
+                if (distanciaRecorreguda < best && noHemPassatPerNode (nodeActual.getConnectsTo().get(i).getNode(), possibleSolucio)) {
+                    possibleSolucio.add(nodeActual.getConnectsTo().get(i).getNode());
+                    distanciaRecorreguda = distanciaRecorreguda + nodeActual.getConnectsTo().get(i).getCost();
+                    best = backTrackingCamiCurt(nodes, nodeActual.getConnectsTo().get(i).getNode(), best, possibleSolucio, solution, distanciaRecorreguda,fi);
+                    distanciaRecorreguda = distanciaRecorreguda - nodeActual.getConnectsTo().get(i).getCost();
+                    possibleSolucio.remove(possibleSolucio.size()-1);
+                }
+            }
+        }
+        return best;
+
+    }
+
+    public boolean hemArribatFinal (Node node, Node fi) {
+        if (node.getId() == fi.getId()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    public boolean noHemPassatPerNode (Node nodeComprovar, List <Node> cami) {
+        for (int i = 0; i < cami.size(); i++) {
+            if (cami.get(i).getId() == nodeComprovar.getId()) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public boolean camiSenseEscapatoria (Node actual, List <Node> cami) {
+        int num_repetits = 0;
+        for (int t=0; t < cami.size(); t++) {
+            for (int y =0; y < actual.getConnectsTo().size();y++) {
+                if(cami.get(t).getId() == actual.getConnectsTo().get(y).getNode().getId()) {
+                    num_repetits++;
+                }
+            }
+        }
+        return cami.size() == num_repetits;
+    }
 }

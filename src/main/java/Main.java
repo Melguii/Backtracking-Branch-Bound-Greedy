@@ -1,5 +1,8 @@
 import JSONClasses.Logica;
 import JSONClasses.Menu;
+import JSONClasses.Server;
+
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -11,14 +14,14 @@ public class Main {
 
         //Demanem a l'usuari que introdueixi el metode que vol utilitzar per distribuir els diferents usuaris en diferents servers
         menu.seleccioMenuMode("Distribucio de carrega");
-        logica.execucioMenuModeCarrega (menu.getOpcioMenuDistribucioCarrega());
+        List<Server> solucio;
+        solucio = logica.execucioMenuModeCarrega (menu.getOpcioMenuDistribucioCarrega());
 
         //Demanem a l'usuari que introdueixi el metode que vol utilitzar per calcular el cami més fiable i el més curt per anar d'un node al altre
         menu.seleccioMenuMode("Disponibilitat (cami entre dos usuaris)");
-        System.out.println(menu.getOpcioMenuDisponibilitat());
-        menu.seleccioUsuari("Quin usuari ets?");
-        menu.seleccioUsuari("A qui vols stalkejar?");
-        logica.execucioMenuModeDisponibilitat (menu.getOpcioMenuDisponibilitat(), menu.getUserEmisor(), menu.getUserReceptor());
+        menu.seleccioUsuari("Quin usuari ets?",logica);
+        menu.seleccioUsuari("A qui vols stalkejar?",logica);
+        logica.execucioMenuModeDisponibilitat (menu.getOpcioMenuDisponibilitat(), menu.getUserEmisor(), menu.getUserReceptor(), solucio);
 
 
     }

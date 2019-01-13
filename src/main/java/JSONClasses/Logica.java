@@ -64,7 +64,7 @@ public class Logica {
      *
      * @param opcio
      */
-    public void execucioMenuModeCarrega(int opcio) {
+    public List <Server> execucioMenuModeCarrega(int opcio) {
         solution.clear();
         Backtracking b = new Backtracking();
         List <Server> possibleSolucio = new ArrayList<Server>();
@@ -125,11 +125,25 @@ public class Logica {
             }
         }
         System.out.println("\n");
+        return solution;
     }
 
-    public void execucioMenuModeDisponibilitat(int opcio, User userEmisor, User userReceptor){
+    public void execucioMenuModeDisponibilitat(int opcio, User userEmisor, User userReceptor, List <Server> distribucions){
+        List <Node> solutio = new ArrayList<Node>();
         switch (opcio) {
             case 1:
+                Backtracking b =  new Backtracking();
+                double best = Double.MAX_VALUE;
+                List <Node> possibleSolucio = new ArrayList<Node>();
+                List <Node> nodes_start  = busquedaUser (userEmisor,distribucions);
+                List <Node> nodes_end = busquedaUser (userReceptor,distribucions);
+                for (int i = 0; i < nodes_start.size(); i++) {
+                    for(int j = 0; j <nodes_end.size(); j++) {
+                        possibleSolucio.add (nodes_start.get(i));
+                        best = b.backTrackingCamiCurt(nodes, nodes_start.get(i), best, possibleSolucio, solutio, 0, nodes_end.get(j));
+                        possibleSolucio.clear();
+                    }
+                }
 
                 break;
 
@@ -148,21 +162,19 @@ public class Logica {
             default:
                 System.out.println("Error opcio introduida no valida");
         }
-
-        for (int w = 0; w < solution.size(); w++) {
-            System.out.println("\nNom del server:" + solution.get(w).getId());
-
-            for (int t = 0; t < solution.get(w).getUsers().size(); t++) {
-                System.out.println("User:" + solution.get(w).getUsers().get(t).getUsername());
+        System.out.println("\n");
+        for (int w = 0; w < solutio.size(); w++) {
+            System.out.print(solutio.get(w).getId());
+            if (w != (solutio.size() -1)) {
+                System.out.print("-->");
             }
         }
         System.out.println("\n");
     }
 
     public User cercaUser(String userName){
-
         for (int i = 0; i < users.length; i++){
-            if (userName == users[i].getUsername()){
+            if (userName.equals(users[i].getUsername())){
                 return users[i];
             }
         }
@@ -326,5 +338,25 @@ public class Logica {
         array_aux_st[1]=t;
 
         return array_aux_st;
+    }
+    public List<Node> busquedaUser (User user, List<Server> distribucions) {
+        int j = 0;
+        int w;
+        boolean trobat = false;
+        while (j < distribucions.size() && !trobat) {
+            w = 0;
+            while (w < distribucions.get(j).getUsers().size() && !trobat) {
+                if (user.getUsername().equals(distribucions.get(j).getUsers().get(w).getUsername())) {
+                    trobat = true;
+                }
+                w++;
+            }
+            j++;
+        }
+        List <Node> llistaNodes =  new ArrayList <Node> ();
+        for (int u = 0; u < distribucions.get(j-1).getNodesDisponibles().size(); u++) {
+            llistaNodes.add(distribucions.get(j-1).getNodesDisponibles().get(u));
+        }
+        return llistaNodes;
     }
 }

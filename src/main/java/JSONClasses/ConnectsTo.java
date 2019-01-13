@@ -3,7 +3,7 @@ package JSONClasses;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ConnectsTo {
+public class ConnectsTo implements Cloneable{
 
     private int to;
     private String name;
@@ -46,5 +46,8 @@ public class ConnectsTo {
 
     public void setNode(Node node) {
         this.node = node;
+    }
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

@@ -137,7 +137,7 @@ public class Menu {
             //Repetirem el proces fins que s'introdueixi una opcio correcta
         } while(comprovacioErrorsOpcio(opcio,1,5));
         //Retornem la opcio correcta introduida per l'usuari
-        if (texto == "Distribucio de carrega") {
+        if (texto.equals("Distribucio de carrega")) {
             opcioMenuDistribucioCarrega = Integer.parseInt(opcio);
         }
         else {
@@ -145,19 +145,18 @@ public class Menu {
         }
     }
 
-    public void seleccioUsuari(String texto){
+    public void seleccioUsuari(String texto, Logica l){
         String userName;
         boolean userTrobat = false;
 
         User user = new User();
-        Logica l = new Logica();
 
         do {
-            mostarMenuModes(texto);
+            System.out.println(texto);
 
             //El usuari introdueix l'opcio desitjada
             Scanner sc = new Scanner (System.in);
-            userName = sc.nextLine();
+            userName = sc.next();
 
             if (userName.equals(l.cercaUser(userName).getUsername())){
                 userTrobat = true;

@@ -11,13 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BranchAndBound {
-    public List<Server> branchAndBoundDistribucioCarrega(Server [] servers, User[] users) {
-        double best; //Cost de la millor solucio obtinguda
-        ArrayList<Server> solucioDefinitiva = new ArrayList<Server>(); //Array on guardem la distribucio de la millor solucio obtinguda
+    public List<Server> branchAndBoundDistribucioCarrega(Server [] servers, User[] users,ArrayList<Server> solucioDefinitiva, double best) {
         ArrayList<Server> possibleSolucio = new ArrayList<Server>(); //Array on guardem la solucio que estava dalt de tot de livesNodes
         ArrayList<ArrayList<Server>> lives_nodes = new ArrayList<ArrayList<Server>>(); //Array on guardem totes les possibles solucions ordenades
         ArrayList <ArrayList <Server>> options = new ArrayList<ArrayList<Server>>(); //Array on guardem totes les possibles continuacions, per exemple si estem en l'usuari 1 --> El server 1,2,3,4,5...
-        best = Double.MAX_VALUE;
         AlgorismesExtres ExtraAlgorithms = new AlgorismesExtres();
         Server serverPrimerUsuari = ExtraAlgorithms.whereIsFeaseble(servers, users[0], possibleSolucio, users);
         possibleSolucio.add(serverPrimerUsuari);

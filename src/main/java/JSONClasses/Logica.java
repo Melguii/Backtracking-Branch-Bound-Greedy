@@ -78,7 +78,10 @@ public class Logica {
                 ComparatorUser c = new ComparatorUserCharge();
                 qUsers.quickSort(users,c,0,users.length-1);
                 BranchAndBound boo = new BranchAndBound();
-                solution = boo.branchAndBoundDistribucioCarrega(servers,users);
+                ArrayList<Server> solucioDefinitiva = new ArrayList<Server>(); //Array on guardem la distribucio de la millor solucio obtinguda
+                double best; //Cost de la millor solucio obtinguda
+                best = Double.MAX_VALUE;
+                solution = boo.branchAndBoundDistribucioCarrega(servers,users,solucioDefinitiva,best);
                 break;
 
             case 3:

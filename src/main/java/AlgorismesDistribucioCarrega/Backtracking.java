@@ -2,6 +2,7 @@ package AlgorismesDistribucioCarrega;
 
 import JSONClasses.Server;
 import JSONClasses.User;
+import utils.AlgorismesExtres;
 //import org.apache.commons.beanutils.BeanUtils;
 
 
@@ -17,13 +18,14 @@ public class Backtracking {
     private int minActivityBest;
     private double maxDistance;
 
+
     public Backtracking () {
         maxActivityBest = Integer.MAX_VALUE;
         minActivityBest = 0;
         maxDistance = Double.MAX_VALUE;
     }
     public double backtringDistribucioCarrega(Server[] servers, int posicio, double best,List <Server> possibleSolucio,List <Server> solution, User[] users) {
-
+        AlgorismesExtres funcExtr = new AlgorismesExtres();
         if (posicio == users.length) {
             int minim = obtindreMinimArray(possibleSolucio, servers.length,true);
             int maxim = obtindreMaximArray(possibleSolucio);
@@ -53,39 +55,14 @@ public class Backtracking {
                 int maxim =  obtindreMaximArray(possibleSolucio);
 
                 if (!(maxim > maxActivityBest && minim < minActivityBest && calculDiferencial(possibleSolucio) > maxDistance)) {
-                    y = serverEncontrado(possibleSolucio, servers[j].getId());
                     Server s;
-
-                    if (y != -1) {
-                        s = possibleSolucio.get(y);
-                        s.getUsers().add(users[posicio]);
-                        s.sumarCarrega(users[posicio]);
-                        possibleSolucio.set(y,s);
-
-                    } else {
-                        s = new Server();
-                        s.setId(servers[j].getId());
-                        s.setCountry(servers[j].getCountry());
-                        s.setLocation(servers[j].getLocation());
-                        s.setReachable_from(servers[j].getReachable_from());
-                        s.setNodesDisponibles(servers[j].getNodesDisponibles());
-                        s.getUsers().add(users[posicio]);
-                        s.sumarCarrega(users[posicio]);
-                        possibleSolucio.add(s);
-                    }
+                    y = funcExtr.addInformationSolution(servers[j],possibleSolucio,users[posicio]);
 
                     int seguent = posicio + 1;
 
                     best = backtringDistribucioCarrega(servers, seguent, best, possibleSolucio, solution, users);
 
-                    if (y == -1) {
-                        possibleSolucio.remove(possibleSolucio.size() - 1);
-
-                    } else {
-                        possibleSolucio.get(y).restarCarrega(possibleSolucio.get(y).getUsers().get(possibleSolucio.get(y).getUsers().size()-1));
-                        possibleSolucio.get(y).getUsers().remove(possibleSolucio.get(y).getUsers().size()-1);
-
-                    }
+                    funcExtr.removeInformation(possibleSolucio,y);
                 } else {
                     return best;
 

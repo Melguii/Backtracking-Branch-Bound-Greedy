@@ -29,20 +29,8 @@ public class Greedy {
             User c = candidates[i];
 
             /* Mirem a quin és el server més factible per aquest usuari i l'equitativitat */
-            s = whereIsFeaseble(funcEx, servers, c, solution,candidates);
-            idServerTrobat = funcEx.serverEncontrado(solution, s.getId());
-
-            if (idServerTrobat != -1){
-                s = solution.get(idServerTrobat);
-                s.getUsers().add(c);
-                s.sumarCarrega(c);
-                solution.set(idServerTrobat, s);
-
-            } else {
-                s = funcEx.setInformation(s, candidates[i]);
-                solution.add(s);
-
-            }
+            s = funcEx.whereIsFeaseble(servers, c, solution,candidates);
+            idServerTrobat = funcEx.addInformationSolution (s, solution, c);
         }
 
         if (is_Solution(servers, tolerancia, solution, funcEx)){
@@ -56,45 +44,7 @@ public class Greedy {
         return solution;
     }
 
-    public Server whereIsFeaseble(AlgorismesExtres funcEx, Server[] servers, User user, List<Server> solution, User [] users){
-        double best = Double.MAX_VALUE;
-        int bestIdServer = 0;
-        double resultat;
-        Server s = new Server();
 
-        for (int i = 0; i < servers.length; i++){
-            int idServerTrobat = funcEx.serverEncontrado(solution, servers[i].getId());
-            if (idServerTrobat != -1){
-                s = solution.get(idServerTrobat);
-                s.getUsers().add(user);
-                s.sumarCarrega(user);
-                solution.set(idServerTrobat, s);
-
-            } else {
-                s = funcEx.setInformation(servers[i], user);
-                solution.add(s);
-            }
-            int maxim = funcEx.obtindreMaximArray(solution);
-            int minim = funcEx.obtindreMinimArray(solution, servers.length,user == users[users.length-1]);
-            resultat =  Math.pow (1.05, (maxim - minim)) * funcEx.calculDiferencial(solution);
-
-            if (resultat < best){
-                best = resultat;
-                bestIdServer = i;
-            }
-            if (idServerTrobat == -1) {
-                solution.remove(solution.size()-1);
-            }
-            else {
-                solution.get(idServerTrobat).restarCarrega(solution.get(idServerTrobat).getUsers().get(solution.get(idServerTrobat).getUsers().size()-1));
-                solution.get(idServerTrobat).getUsers().remove(solution.get(idServerTrobat).getUsers().size()-1);
-            }
-        }
-
-        s = servers[bestIdServer];
-
-        return s;
-    }
 
     public boolean is_Solution(Server[] servers, int tolerancia, List<Server> solution, AlgorismesExtres funcEx){
         int menorCarrega= funcEx.obtindreMinimArray(solution, servers.length,true);

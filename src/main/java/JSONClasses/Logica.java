@@ -1,6 +1,7 @@
 package JSONClasses;
 
 import AlgorismesDistribucioCarrega.Backtracking;
+import AlgorismesDistribucioCarrega.BranchAndBound;
 import AlgorismesDistribucioCarrega.Greedy;
 import com.google.gson.Gson;
 
@@ -70,7 +71,8 @@ public class Logica {
                 break;
 
             case 2:
-
+                BranchAndBound boo = new BranchAndBound();
+                boo.branchAndBoundDistribucioCarrega(servers,users);
                 break;
 
             case 3:

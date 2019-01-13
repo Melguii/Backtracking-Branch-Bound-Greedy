@@ -104,5 +104,62 @@ public class AlgorismesExtres {
 
         return s;
     }
+    public Server whereIsFeaseble(Server[] servers, User user, List<Server> solution, User [] users){
+        double best = Double.MAX_VALUE;
+        int bestIdServer = 0;
+        double resultat;
+        Server s = new Server();
 
+        for (int i = 0; i < servers.length; i++){
+            int idServerTrobat = serverEncontrado(solution, servers[i].getId());
+            if (idServerTrobat != -1){
+                s = solution.get(idServerTrobat);
+                s.getUsers().add(user);
+                s.sumarCarrega(user);
+                solution.set(idServerTrobat, s);
+
+            } else {
+                s = setInformation(servers[i], user);
+                solution.add(s);
+            }
+            int maxim = obtindreMaximArray(solution);
+            int minim = obtindreMinimArray(solution, servers.length,user == users[users.length-1]);
+            resultat =  Math.pow (1.05, (maxim - minim)) * calculDiferencial(solution);
+
+            if (resultat < best){
+                best = resultat;
+                bestIdServer = i;
+            }
+            removeInformation (solution, idServerTrobat);
+        }
+
+        s = servers[bestIdServer];
+
+        return s;
+    }
+    public int addInformationSolution (Server s, List <Server> solution, User c) {
+        int idServerTrobat;
+        idServerTrobat = serverEncontrado(solution, s.getId());
+
+        if (idServerTrobat != -1){
+            s = solution.get(idServerTrobat);
+            s.getUsers().add(c);
+            s.sumarCarrega(c);
+            solution.set(idServerTrobat, s);
+
+        } else {
+            s = setInformation(s, c);
+            solution.add(s);
+
+        }
+        return idServerTrobat;
+    }
+    public void removeInformation (List <Server> solution, int idServerTrobat) {
+        if (idServerTrobat == -1) {
+            solution.remove(solution.size() - 1);
+        } else {
+            solution.get(idServerTrobat).restarCarrega(solution.get(idServerTrobat).getUsers().get(solution.get(idServerTrobat).getUsers().size() - 1));
+            solution.get(idServerTrobat).getUsers().remove(solution.get(idServerTrobat).getUsers().size() - 1);
+        }
+    }
 }

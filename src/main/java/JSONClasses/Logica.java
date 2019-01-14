@@ -90,6 +90,7 @@ public class Logica {
                 ComparatorUser c = new ComparatorUserCharge();
                 qUsers.quickSort(users,c,0,users.length-1);
                 solution = boo.branchAndBoundDistribucioCarrega(servers,users,solucioDefinitiva,best);
+
                 break;
 
             case 3:
@@ -145,12 +146,42 @@ public class Logica {
         double millorFiable = 0;
         int pathNumber = 0;
         Backtracking b =  new Backtracking();
+        BranchAndBound bb =  new BranchAndBound();
         int best = Integer.MAX_VALUE;
         double bestFiabilitat = Double.MAX_VALUE;
         List <Node> possibleSolucio = new ArrayList<Node>();
         List <Node> solutioFiabilitat = new ArrayList <Node>();
         List <Node> nodes_start  = busquedaUser (userEmisor,distribucions);
         List <Node> nodes_end = busquedaUser (userReceptor,distribucions);
+
+
+        while ( pathNumber < serverEmisor.getNodesDisponibles().size()){
+            ArrayList <Node> resolucio = new ArrayList<Node>();
+            int possibleBest = g.greedyCamiMinim(serverEmisor, serverReceptor, nodes, serverEmisor.getNodesDisponibles().get(pathNumber), resolucio);
+            if (possibleBest < millor) {
+                solutio.clear();
+                for(int s = 0; s < resolucio.size(); s++) {
+                    solutio.add(resolucio.get(s));
+                }
+                millor =  possibleBest;
+            }
+            //solutionCamiFiable.add(g.greedyCamiFiable(solution, serverEmisor, serverReceptor, nodes));
+            pathNumber++;
+        }
+        pathNumber = 0;
+        while ( pathNumber < serverEmisor.getNodesDisponibles().size()){
+            ArrayList <Node> resolucioFiabilitat = new ArrayList<Node>();
+            double possibleBestFiable = g.greedyFiabilitat(serverEmisor, serverReceptor, nodes, serverEmisor.getNodesDisponibles().get(pathNumber), resolucioFiabilitat);
+            if (possibleBestFiable > millorFiable) {
+                solutioFiabilitat.clear();
+                for(int s = 0; s < resolucioFiabilitat.size(); s++) {
+                    solutioFiabilitat.add(resolucioFiabilitat.get(s));
+                }
+                millorFiable =  possibleBestFiable;
+            }
+            //solutionCamiFiable.add(g.greedyCamiFiable(solution, serverEmisor, serverReceptor, nodes));
+            pathNumber++;
+        }
         switch (opcio) {
             case 1:
                 for (int i = 0; i < nodes_start.size(); i++) {
@@ -171,62 +202,22 @@ public class Logica {
                 break;
 
             case 2:
-
+                solutio = bb.branchAndBoundBusquedaCamiCurt (nodes_start, nodes_end, solutio, Integer.MAX_VALUE);
+                solutioFiabilitat = bb.branchAndBoundBusquedaCamiFiable(nodes_start, nodes_end, solutioFiabilitat, 0);
                 break;
 
             case 3:
-                while ( pathNumber < serverEmisor.getNodesDisponibles().size()){
-                    ArrayList <Node> resolucio = new ArrayList<Node>();
-                    int possibleBest = g.greedyCamiMinim(serverEmisor, serverReceptor, nodes, serverEmisor.getNodesDisponibles().get(pathNumber), resolucio);
-                    if (possibleBest < millor) {
-                        solutio.clear();
-                        for(int s = 0; s < resolucio.size(); s++) {
-                            solutio.add(resolucio.get(s));
-                        }
-                        millor =  possibleBest;
-                    }
-                    //solutionCamiFiable.add(g.greedyCamiFiable(solution, serverEmisor, serverReceptor, nodes));
-                    pathNumber++;
+                if (solutioFiabilitat.size() == 0) {
+                    System.out.println("En aquest cas concret, el Greedy no pot donar una solucio de cami mes fiable valida, degut a que s'arriba a un punt on s'ha d'anar a nodes ja recorreguts i per tant es queda encallat");
                 }
                 if (solutio.size() == 0) {
                     System.out.println("En aquest cas concret, el Greedy no pot donar una solucio de cami mes curt valida, degut a que s'arriba a un punt on s'ha d'anar a nodes ja recorreguts i per tant es queda encallat");
-                }
-                millor = 0;
-                pathNumber = 0;
-                while ( pathNumber < serverEmisor.getNodesDisponibles().size()){
-                    ArrayList <Node> resolucioFiabilitat = new ArrayList<Node>();
-                    double possibleBestFiable = g.greedyFiabilitat(serverEmisor, serverReceptor, nodes, serverEmisor.getNodesDisponibles().get(pathNumber), resolucioFiabilitat);
-                    if (possibleBestFiable > millorFiable) {
-                        solutioFiabilitat.clear();
-                        for(int s = 0; s < resolucioFiabilitat.size(); s++) {
-                            solutioFiabilitat.add(resolucioFiabilitat.get(s));
-                        }
-                        millorFiable =  possibleBestFiable;
-                    }
-                    //solutionCamiFiable.add(g.greedyCamiFiable(solution, serverEmisor, serverReceptor, nodes));
-                    pathNumber++;
-                }
-                if (solutioFiabilitat.size() == 0) {
-                    System.out.println("En aquest cas concret, el Greedy no pot donar una solucio de cami mes fiable valida, degut a que s'arriba a un punt on s'ha d'anar a nodes ja recorreguts i per tant es queda encallat");
                 }
 
                 break;
 
             case 4:
                 millor = Integer.MAX_VALUE;
-                while ( pathNumber < serverEmisor.getNodesDisponibles().size()){
-                    ArrayList <Node> resolucio = new ArrayList<Node>();
-                    int possibleBest = g.greedyCamiMinim(serverEmisor, serverReceptor, nodes, serverEmisor.getNodesDisponibles().get(pathNumber), resolucio);
-                    if (possibleBest < millor) {
-                        solutio.clear();
-                        for(int s = 0; s < resolucio.size(); s++) {
-                            solutio.add(resolucio.get(s));
-                        }
-                        millor =  possibleBest;
-                    }
-                    //solutionCamiFiable.add(g.greedyCamiFiable(solution, serverEmisor, serverReceptor, nodes));
-                    pathNumber++;
-                }
                 b =  new Backtracking();
                 best = millor;
                 possibleSolucio = new ArrayList<Node>();
@@ -239,20 +230,6 @@ public class Logica {
                         possibleSolucio.clear();
                     }
                 }
-                pathNumber = 0;
-                while ( pathNumber < serverEmisor.getNodesDisponibles().size()){
-                    ArrayList <Node> resolucioFiabilitat = new ArrayList<Node>();
-                    double possibleBestFiable = g.greedyFiabilitat(serverEmisor, serverReceptor, nodes, serverEmisor.getNodesDisponibles().get(pathNumber), resolucioFiabilitat);
-                    if (possibleBestFiable > millorFiable) {
-                        solutioFiabilitat.clear();
-                        for(int s = 0; s < resolucioFiabilitat.size(); s++) {
-                            solutioFiabilitat.add(resolucioFiabilitat.get(s));
-                        }
-                        millorFiable =  possibleBestFiable;
-                    }
-                    //solutionCamiFiable.add(g.greedyCamiFiable(solution, serverEmisor, serverReceptor, nodes));
-                    pathNumber++;
-                }
                 for (int i = 0; i < nodes_start.size(); i++) {
                     for(int j = 0; j <nodes_end.size(); j++) {
                         possibleSolucio.add (nodes_start.get(i));
@@ -262,6 +239,8 @@ public class Logica {
                 }
                 break;
             case 5:
+                solutio = bb.branchAndBoundBusquedaCamiCurt (nodes_start, nodes_end, solutio, millor);
+                solutioFiabilitat = bb.branchAndBoundBusquedaCamiFiable(nodes_start, nodes_end, solutioFiabilitat, millorFiable);
                 break;
             default:
                 System.out.println("Error opcio introduida no valida");

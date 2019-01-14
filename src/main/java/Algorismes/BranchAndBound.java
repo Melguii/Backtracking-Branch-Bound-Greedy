@@ -1,18 +1,15 @@
 package Algorismes;
 
-import Comparators.ComparatorServerList;
-import Comparators.CompareDistribution;
-import JSONClasses.Logica;
+import Comparators.*;
 import JSONClasses.Node;
 import JSONClasses.Server;
 import JSONClasses.User;
 import Sorts.QuickSort;
+import Sorts.QuickSortArrayNodes;
 import utils.AlgorismesExtres;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Node;
 
 public class BranchAndBound {
     public ArrayList<Server> branchAndBoundDistribucioCarrega(Server[] servers, User[] users, ArrayList<Server> solucioDefinitiva, double best) {
@@ -134,7 +131,6 @@ public class BranchAndBound {
     private void encuarSolucio(ArrayList<ArrayList<Server>> lives_nodes, ArrayList<Server> possibleSolucio, int numServers) {
         lives_nodes.add(possibleSolucio);
         QuickSort q = new QuickSort();
-        AlgorismesExtres ExtraAlgorithms = new AlgorismesExtres();
         ComparatorServerList c = new CompareDistribution();
         q.quickSort(lives_nodes, c, 0, lives_nodes.size() - 1, numServers);
 
@@ -221,12 +217,18 @@ public List <Node> branchAndBoundBusquedaCamiCurt (List <Node> nodes_principals,
     public void encua (ArrayList <ArrayList <Node>> lives_nodes, ArrayList <Node>opcio,int best) {
         if (sumaCostos(opcio) < best) {
             lives_nodes.add(opcio);
+            QuickSortArrayNodes q = new QuickSortArrayNodes();
+            ComparatorArrayNodes c = new CompareNodesByMinimCost();
+            q.quickSort(lives_nodes,c,0,lives_nodes.size()-1);
         }
     }
 
-    public void encuaFiables (ArrayList <ArrayList <Node>> lives_nodes, ArrayList <Node>opcio,double best) {
+    private void encuaFiables (ArrayList <ArrayList <Node>> lives_nodes, ArrayList <Node>opcio,double best) {
         if (calculFiabilitat(opcio) > best) {
             lives_nodes.add(opcio);
+            QuickSortArrayNodes q = new QuickSortArrayNodes();
+            ComparatorArrayNodes c = new CompareNodesByFiabilitat();
+            q.quickSort(lives_nodes,c,0,lives_nodes.size()-1);
         }
     }
     public double calculFiabilitat (List <Node> possibleSolucio) {
@@ -248,7 +250,7 @@ public List <Node> branchAndBoundBusquedaCamiCurt (List <Node> nodes_principals,
         }
         return false;
     }
-    private  int  sumaCostos (ArrayList <Node> opcio) {
+    public  int  sumaCostos (ArrayList <Node> opcio) {
         int cost = 0;
         boolean trobat = false;
         for (int i = 0; i < opcio.size()-1; i++) {
@@ -280,7 +282,7 @@ public List <Node> branchAndBoundBusquedaCamiCurt (List <Node> nodes_principals,
         lives_nodes.remove(lives_nodes.size()-1);
         return auxiliar;
     }
-    public ArrayList <ArrayList <Node>> expandirCamiMinim (ArrayList<Node> opcioActual){
+    private ArrayList <ArrayList <Node>> expandirCamiMinim (ArrayList<Node> opcioActual){
         ArrayList <ArrayList <Node>> auxiliar = new ArrayList<ArrayList<JSONClasses.Node>>();
         AlgorismesExtres algExtr = new AlgorismesExtres();
         int comptador_valids =0;

@@ -377,8 +377,10 @@ public class Logica {
         }
         tempsTotalCurt = (endTimeCurt - startTimeCurt) + tempsTotalCurt;
         tempsTotalFia = (endTimeFia - startTimeFia) + tempsTotalFia;
-        System.out.println("\nHE TARDAT " + tempsTotalCurt + "ms en calcular el cami curt");
-        System.out.println("\nHE TARDAT " + tempsTotalFia + "ms en calcular el cami mes fiable");
+        if ((solutio.size() != 0) && (solutioFiabilitat.size() != 0)) {
+            System.out.println("\nHE TARDAT " + tempsTotalCurt + "ms en calcular el cami curt");
+            System.out.println("\nHE TARDAT " + tempsTotalFia + "ms en calcular el cami mes fiable");
+        }
         /*
         for (int w = 0; w < solutionCamiFiable.size(); w++) {
             System.out.println("\nNom del server:" + solutionCamiMinim.get(w).getId());

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User implements Cloneable{
+    //Atributs de la classe User
     private String              username;
     private int                 activity;
     private int                 followers;
@@ -143,18 +144,36 @@ public class User implements Cloneable{
         }
     }
 
+    /**
+     * Getter de Activity
+     * @return Retorna l'activitat de l'usuari
+     */
     public int getActivity() {
         return activity;
     }
 
+    /**
+     * Setter de Activity
+     * @param activity Activitat que passem al usuari
+     */
     public void setActivity(int activity) {
         this.activity = activity;
     }
 
+    /**
+     * Metode que ens permet calcular l'ubicació actual del usuari
+     */
     public void calcularLocalitzacioUsuari () {
+        //Agafem la localitzacio de l'ultim post per obtindre l'ubicació del usuari
         location.add(posts.get(posts.size() - 1).getLocation().get(0));
         location.add(posts.get(posts.size() - 1).getLocation().get(1));
     }
+
+    /**
+     * Metode que ens permet calcular el Haversine(distancia d'un usuari respecte a un server per exemple.
+     * @param locationRef Localitzacio que volem comparar amb la del usuari
+     * @return La distancia real entre els dos punts establerts
+     */
     public double calculHaversine (List<Double> locationRef) {
         double comparacioUbicacio;
         double latitudRef = locationRef.get(0);
@@ -164,6 +183,12 @@ public class User implements Cloneable{
         comparacioUbicacio = ((2 * 6371* Math.asin(Math.sqrt(Math.pow(Math.sin(Math.toRadians(dlatitud/2)),(float)2)+Math.cos(Math.toRadians(this.location.get(0)))*Math.cos(Math.toRadians(latitudRef))*Math.pow(Math.sin(Math.toRadians(dlongitud/2)),2)))));
         return comparacioUbicacio;
     }
+
+    /**
+     * Metode que serveix per clonar el Objecte del usuari
+     * @return Retornem el objecte clonat
+     * @throws CloneNotSupportedException Excepcio que salta si no ha sigut possible clonar l'objecte
+     */
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }

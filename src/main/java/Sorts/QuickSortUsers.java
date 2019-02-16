@@ -8,6 +8,14 @@ import JSONClasses.User;
 import java.util.ArrayList;
 
 public class QuickSortUsers {
+    /**
+     * Metode que ens permet realitzar el quickSort
+     * @param p Array que volem ordenar
+     * @param c Comparador que usarem per tal de realitzar el quicksort
+     * @param i Posicio des d'on comencem a ordenar
+     * @param j Posicio on volem acabar ordenant
+     * @return Retornem el array de forma ordenada
+     */
     public User[] quickSort (User [] p, ComparatorUser c, int i, int j) {
         int s;
         int t;

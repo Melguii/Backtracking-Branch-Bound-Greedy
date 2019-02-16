@@ -185,42 +185,83 @@ public class Menu {
         System.out.println("5.Greedy + Branch & Bound");
         System.out.println("Selecciona una opcio per realizar la " + texto);
     }
+
+    /**
+     * Getter de la opcio de menu fitxers
+     * @return Opcio introduida per l'usuari en el menu de fitxers
+     */
     public int getOpcioMenuFitxers() {
         return opcioMenuFitxers;
     }
 
+    /**
+     * Setter de la opcio menu fitxers
+     * @param opcioMenuFitxers Opcio introduida per l'usuari en menu fitxers
+     */
     public void setOpcioMenuFitxers(int opcioMenuFitxers) {
         this.opcioMenuFitxers = opcioMenuFitxers;
     }
 
+    /**
+     * Getter de la opcio del menu de disponibilitat
+     * @return Opcio introduida per l'usuari en la opcio del menu de disponibilitat
+     */
     public int getOpcioMenuDisponibilitat() {
         return opcioMenuDisponibilitat;
     }
 
+    /**
+     * Setter de menu de disponibilitat
+     * @param opcioMenuDisponibilitat La opcio introduida per l'usuari en el menu de disponibilitat
+     */
     public void setOpcioMenuDisponibilitat(int opcioMenuDisponibilitat) {
         this.opcioMenuDisponibilitat = opcioMenuDisponibilitat;
     }
 
+    /**
+     * Getter opcio menu distribucio carrega
+     * @return Opcio introduida per l'usuari en el menu de distribucio de carrega
+     */
     public int getOpcioMenuDistribucioCarrega() {
         return opcioMenuDistribucioCarrega;
     }
 
+    /**
+     * Setter de opcio menu distribucio carrega
+     * @param opcioMenuDistribucioCarrega Opcio introduida per l'usuari en el menu de distribucio de carrega
+     */
     public void setOpcioMenuDistribucioCarrega(int opcioMenuDistribucioCarrega) {
         this.opcioMenuDistribucioCarrega = opcioMenuDistribucioCarrega;
     }
 
+    /**
+     * Getter del Usuari Emissor
+     * @return Retorna el usuari emissor del cami
+     */
     public User getUserEmisor() {
         return UserEmisor;
     }
 
+    /**
+     * Setter del Usuari Emissor
+     * @param userEmisor Usuari Emissor que volem establir en el cami que estem construint
+     */
     public void setUserEmisor(User userEmisor) {
         UserEmisor = userEmisor;
     }
 
+    /**
+     * Getter del User Receptor
+     * @return Retorna el usuari recpetor del cami que estem construint
+     */
     public User getUserReceptor() {
         return UserReceptor;
     }
 
+    /**
+     * Setter del User Receptor
+     * @param userReceptor Usuari Receptor que volem establir en el cami que estem construint
+     */
     public void setUserReceptor(User userReceptor) {
         UserReceptor = userReceptor;
     }

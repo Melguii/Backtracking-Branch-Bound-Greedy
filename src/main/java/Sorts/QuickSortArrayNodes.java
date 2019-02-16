@@ -8,6 +8,14 @@ import JSONClasses.Node;
 import java.util.ArrayList;
 
 public class QuickSortArrayNodes {
+    /**
+     * Metode que ens permet realitzar el quickSort
+     * @param p Array que volem ordenar
+     * @param c Comparador que usarem per tal de realitzar el quicksort
+     * @param i Posicio des d'on comencem a ordenar
+     * @param j Posicio on volem acabar ordenant
+     * @return Retornem el array de forma ordenada
+     */
     public ArrayList<ArrayList<Node>> quickSort (ArrayList <ArrayList<Node>> p, ComparatorArrayNodes c, int i, int j) {
         int s;
         int t;

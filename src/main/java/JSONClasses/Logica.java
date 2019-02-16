@@ -401,7 +401,9 @@ public class Logica {
         }
 
         System.out.println("Error, usuari no trobat");
-        return null;
+        User u = new User();
+        u.setUsername("");
+        return u;
     }
 
     /**

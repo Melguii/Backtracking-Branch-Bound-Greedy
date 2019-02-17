@@ -63,6 +63,7 @@ public class Backtracking {
                 //Si no es solucio retornem el best i seguim en altres casos
                 return best;
 
+
             }
         }
         else {

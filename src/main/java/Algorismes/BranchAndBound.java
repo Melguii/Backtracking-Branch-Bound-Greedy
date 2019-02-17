@@ -18,11 +18,15 @@ public class BranchAndBound {
         ArrayList<ArrayList<Server>> options = new ArrayList<ArrayList<Server>>();                                                    //Array on guardem totes les possibles continuacions, per exemple si estem en l'usuari 1 --> El server 1,2,3,4,5...
         AlgorismesExtres ExtraAlgorithms = new AlgorismesExtres();
 
-        Server serverPrimerUsuari = ExtraAlgorithms.whereIsFeaseble(servers, users[0], possibleSolucio, users);
-        possibleSolucio.add(serverPrimerUsuari);
-        ExtraAlgorithms.addInformationSolution(serverPrimerUsuari, possibleSolucio, users[0]);
+        //Server serverPrimerUsuari = ExtraAlgorithms.whereIsFeaseble(servers, users[0], possibleSolucio, users);
+        // possibleSolucio.add(serverPrimerUsuari);
+        //ExtraAlgorithms.addInformationSolution(serverPrimerUsuari, possibleSolucio, users[0]);
+        for(int y=0; y < servers.length;y++){
+            ExtraAlgorithms.addInformationSolution(servers[y],possibleSolucio,users[0]);
+            encuarSolucio(lives_nodes, possibleSolucio, servers.length);
+            possibleSolucio.clear();
+        }
 
-        encuarSolucio(lives_nodes, possibleSolucio, servers.length);
         while (lives_nodes.size() != 0) {
             possibleSolucio = desencua(lives_nodes);
             expand(ExtraAlgorithms, options, possibleSolucio, servers, users);
@@ -33,14 +37,12 @@ public class BranchAndBound {
                 } else {
                     if (is_promising(options.get(j), best, servers.length, ExtraAlgorithms)) {
                         encuarSolucio(lives_nodes, options.get(j), servers.length);
-
                     }
                 }
             }
 
             options.clear();
         }
-
         return solucioDefinitiva;
     }
 
@@ -129,7 +131,7 @@ public class BranchAndBound {
     }
 
     private void encuarSolucio(ArrayList<ArrayList<Server>> lives_nodes, ArrayList<Server> possibleSolucio, int numServers) {
-        lives_nodes.add(possibleSolucio);
+        lives_nodes.add((ArrayList<Server>) possibleSolucio.clone());
         QuickSort q = new QuickSort();
         ComparatorServerList c = new CompareDistribution();
         q.quickSort(lives_nodes, c, 0, lives_nodes.size() - 1, numServers);

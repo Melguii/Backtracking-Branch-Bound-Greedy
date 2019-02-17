@@ -98,6 +98,7 @@ public class Logica {
         switch (opcio) {
             case 1:
                 startTime = System.currentTimeMillis();
+                double hol;
                 //Cridem a la funció que s'ocupa de realitzar la distribució de carrega dels servers amb solament backtracking
                 b.backtringDistribucioCarrega(servers,0, Double.MAX_VALUE, possibleSolucio, solution, users);
                 endTime = System.currentTimeMillis();

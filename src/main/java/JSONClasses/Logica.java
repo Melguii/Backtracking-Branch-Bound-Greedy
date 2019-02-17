@@ -98,7 +98,6 @@ public class Logica {
         switch (opcio) {
             case 1:
                 startTime = System.currentTimeMillis();
-                double hol;
                 //Cridem a la funció que s'ocupa de realitzar la distribució de carrega dels servers amb solament backtracking
                 b.backtringDistribucioCarrega(servers,0, Double.MAX_VALUE, possibleSolucio, solution, users);
                 endTime = System.currentTimeMillis();
@@ -154,6 +153,9 @@ public class Logica {
                 minim = ExtraAlgorithms.obtindreMinimArray(solution, servers.length ,true);
                 best =  Math.pow (1.05, (maxim - minim)) * ExtraAlgorithms.calculDiferencial(solution);
 
+                QuickSortUsers qUsers2 = new QuickSortUsers();
+                ComparatorUser c2 = new ComparatorUserCharge();
+                qUsers2.quickSort(users,c2,0,users.length-1);
                 //Cridem a la funcio de branch and bound que s'ocupa de la distribucio de carrega passant-li el valor de best calculat anteriorment
                 solution = boo.branchAndBoundDistribucioCarrega(servers, users, solution, best);
                 endTime = System.currentTimeMillis();
